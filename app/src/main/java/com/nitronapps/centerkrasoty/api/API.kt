@@ -12,6 +12,8 @@ import java.util.concurrent.TimeUnit
 class API {
     companion object {
         fun getRetrofitAPI() : IAPI {
+
+            //TODO: Remove in release version
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 

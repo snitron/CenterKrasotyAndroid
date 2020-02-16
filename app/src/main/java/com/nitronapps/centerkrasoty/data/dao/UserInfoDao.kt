@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.nitronapps.centerkrasoty.data.entity.UserInfo
 import androidx.lifecycle.LiveData
-
+import io.reactivex.Completable
 
 
 @Dao
@@ -15,7 +15,7 @@ interface UserInfoDao{
     fun getAll(): List<UserInfo>
 
     @Insert
-    fun add(data: UserInfo)
+    fun add(data: UserInfo): Completable
 
     @Delete
     fun delete(data: UserInfo)

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">CenterKrasoty</string>
+    <string name="loginLabel">ВОЙТИ</string>
+    <string name="registrationLabel">ЗАРЕГИСТРИРОВАТЬСЯ</string>
+    <string name="nameLabel">Имя</string>
+    <string name="surnameLabel">Фамилия</string>
+    <string name="loginTextView">Логин/псевдоним</string>
+    <string name="passwordTextView">Пароль</string>
+    <string name="typeSMS">Введите код из СМС</string>
+    
+    <string name="incorrectData">Вы ввели неправильные логин или пароль</string>
+    <string name="serverError">Ошибка сервера, попробуйте ещё раз</string>
+    <string name="loginAlreadyExists">Аккаунт с таким логином/псевдонимом уже существует</string>
+    <string name="phoneAlreadyExists">Аккаунт с этим номером телефона уже существует</string>
+    <string name="incorrectSMS">Вы ввели неправльный номер из SMS</string>
+    <string name="fillAllFields">Заполните все поля</string>
 </resources>
