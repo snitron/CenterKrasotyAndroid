@@ -2,8 +2,10 @@ package com.nitronapps.centerkrasoty.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.nitronapps.centerkrasoty.data.dao.OfficeDao
 import com.nitronapps.centerkrasoty.data.dao.OrderDao
 import com.nitronapps.centerkrasoty.data.dao.UserInfoDao
+import com.nitronapps.centerkrasoty.data.entity.Office
 import com.nitronapps.centerkrasoty.data.entity.Order
 import com.nitronapps.centerkrasoty.data.entity.UserInfo
 
@@ -14,4 +16,9 @@ abstract class UserDatabase: RoomDatabase() {
 @Database(entities = arrayOf(Order::class), version = 1, exportSchema = false)
 abstract class OrderDatabase: RoomDatabase() {
     abstract fun orderDao(): OrderDao
+}
+
+@Database(entities = arrayOf(Office::class), version = 1, exportSchema = false)
+abstract class OfficeDatabase: RoomDatabase() {
+    abstract fun officeDao(): OfficeDao
 }

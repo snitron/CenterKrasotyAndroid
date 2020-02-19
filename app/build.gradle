@@ -29,6 +29,8 @@ android {
         targetCompatibility = "8"
         sourceCompatibility = "8"
     }
+
+    kotlinOptions { jvmTarget = "1.8" }
 }
 
 dependencies {
@@ -40,6 +42,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     //Moxy
     implementation "com.github.moxy-community:moxy:2.1.1"
@@ -70,7 +73,10 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
 
-
     //Decoro
     implementation 'ru.tinkoff.decoro:decoro:1.4.0'
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.android.material:material:1.1.0'
 }

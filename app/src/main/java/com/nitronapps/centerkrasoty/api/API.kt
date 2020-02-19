@@ -1,7 +1,6 @@
 package com.nitronapps.centerkrasoty.api
 
-import com.nitronapps.centerkrasoty.model.SERVER_ADRESS
-import okhttp3.Interceptor
+import com.nitronapps.centerkrasoty.model.SERVER_ADDRESS
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,7 +16,6 @@ class API {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-
             val client = OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(interceptor)
@@ -25,7 +23,7 @@ class API {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(SERVER_ADRESS)
+                .baseUrl(SERVER_ADDRESS)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)

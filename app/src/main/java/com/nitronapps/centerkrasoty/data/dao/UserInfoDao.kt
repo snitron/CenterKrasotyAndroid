@@ -7,18 +7,23 @@ import androidx.room.Query
 import com.nitronapps.centerkrasoty.data.entity.UserInfo
 import androidx.lifecycle.LiveData
 import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.Observable
 
 
 @Dao
 interface UserInfoDao{
     @Query("SELECT * from userinfo")
-    fun getAll(): List<UserInfo>
+    fun getAll(): Observable<List<UserInfo>>
 
     @Insert
-    fun add(data: UserInfo): Completable
+    fun insert(data: UserInfo): Completable
 
     @Delete
-    fun delete(data: UserInfo)
+    fun delete(data: UserInfo): Completable
+
+    @Query("SELECT * FROM userinfo WHERE id = :id")
+    fun getById(id: Int): Maybe<UserInfo>
 
     @Query("SELECT COUNT(id) FROM userinfo")
     fun getRowCount(): Int

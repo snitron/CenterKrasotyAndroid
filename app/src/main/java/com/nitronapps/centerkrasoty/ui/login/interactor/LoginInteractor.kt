@@ -24,9 +24,8 @@ interface LoginInteractorInterface {
 }
 
 class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface {
-    val userDatabase: UserDatabase
-    val orderDatabase: OrderDatabase
-    val api: IAPI
+    private val userDatabase: UserDatabase
+    private val api: IAPI
     private val compositeDisposable = CompositeDisposable()
     private var loginInMemory = ""
 
@@ -35,11 +34,6 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).build()
-        orderDatabase = Room.databaseBuilder(
-            presenter.context,
-            OrderDatabase::class.java,
-            "orders_db"
         ).build()
 
         api = API.getRetrofitAPI()
@@ -51,7 +45,11 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
                 .subscribe({
                     if (it.code == 200) {
                         val user = UserInfo(0, it.token)
-                        userDatabase.userDao().add(user)
+                        compositeDisposable.add(
+                            userDatabase.userDao().insert(user)
+                                .subscribeOn(Schedulers.io())
+                                .subscribe()
+                        )
                         presenter.startMain()
                     } else
                         presenter.sayError(LoginStatus.LOGIN, it.code)
@@ -101,7 +99,7 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
                         if (it.result) {
                             val user = UserInfo(0, it.token)
                             compositeDisposable.add(
-                                userDatabase.userDao().add(user)
+                                userDatabase.userDao().insert(user)
                                     .subscribeOn(Schedulers.io())
                                     .subscribe()
                             )

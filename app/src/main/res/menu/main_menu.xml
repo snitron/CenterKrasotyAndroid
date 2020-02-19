@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemCreateNewOrder"
+        android:icon="@drawable/ic_create_black"
+        android:title="@string/createOrder" />
+
+    <item
+        android:id="@+id/itemMyOrders"
+        android:icon="@drawable/ic_assignment_black"
+        android:title="@string/myOrders" />
+
+    <item
+        android:id="@+id/itemMyAccount"
+        android:icon="@drawable/ic_account_box_black"
+        android:title="@string/myAccount"
+        />
+
+    <item
+        android:id="@+id/itemInfo"
+        android:icon="@drawable/ic_info_black"
+        android:title="@string/aboutApp"
+        />
+</menu>

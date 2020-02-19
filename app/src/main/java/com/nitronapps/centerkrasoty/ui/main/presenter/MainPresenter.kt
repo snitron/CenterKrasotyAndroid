@@ -10,15 +10,37 @@ import moxy.MvpPresenter
 
 class MainPresenter(val context: Context): MvpPresenter<MainView>() {
     lateinit var interactor: MainInteractorInterface
+    private var condition = TransactionStatus.OFFICE
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
         interactor = MainInteractor(this)
 
-        if(interactor.checkLogin()) {
+        if(interactor.checkLogin())
             viewState.startLoginPage()
-        }
+        else
+            interactor.prepareUser()
+
+        if(interactor.checkOffice())
+            condition = TransactionStatus.OFFICE
+        else
+            condition = TransactionStatus.SERVICE
+
+        startByCondition(condition)
+
     }
 
+    fun onDestroyCalled(){
+        interactor.disposeRequests()
+    }
+
+    fun startByCondition(status: TransactionStatus) {
+        viewState.setFragmentByStatus(status)
+    }
+
+}
+
+enum class TransactionStatus {
+    OFFICE, SERVICE, PLACE, TIME;
 }

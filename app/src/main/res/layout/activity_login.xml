@@ -7,7 +7,7 @@
     tools:context=".ui.login.view.LoginActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewOfficeAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -33,7 +33,7 @@
         android:ems="10"
         android:hint="@string/passwordTextView"
         android:inputType="textPassword"
-        android:maxLength="25"
+        android:maxLength="20"
         app:layout_constraintBottom_toTopOf="@+id/editTextName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,7 +51,7 @@
         android:ems="10"
         android:hint="@string/loginTextView"
         android:inputType="textPersonName"
-        android:maxLength="25"
+        android:maxLength="20"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/loginLabel"
+        android:text="@string/registrationLabel"
         app:layout_constraintEnd_toEndOf="@+id/buttonLogin"
         app:layout_constraintStart_toStartOf="@+id/buttonLogin"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
@@ -120,6 +120,7 @@
         android:ems="10"
         android:hint="@string/nameLabel"
         android:inputType="textPersonName"
+        android:maxLength="20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -138,6 +139,7 @@
         android:ems="10"
         android:hint="@string/surnameLabel"
         android:inputType="textPersonName"
+        android:maxLength="20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextName" />
@@ -157,6 +159,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewOfficeAddress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

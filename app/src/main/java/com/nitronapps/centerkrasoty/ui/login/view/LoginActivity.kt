@@ -167,9 +167,7 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
         super.onDestroy()
     }
 
-    private suspend fun renameAfter(text: String, duration: Long) {
-
-    }
+    override fun onBackPressed() {}
 }
 
 enum class LoginStatus {

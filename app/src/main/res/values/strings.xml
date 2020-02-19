@@ -14,4 +14,12 @@
     <string name="phoneAlreadyExists">Аккаунт с этим номером телефона уже существует</string>
     <string name="incorrectSMS">Вы ввели неправльный номер из SMS</string>
     <string name="fillAllFields">Заполните все поля</string>
+
+    <string name="createOrder">Создать заказ</string>
+    <string name="myOrders">Мои заказы</string>
+    <string name="myAccount">Мой аккаунт</string>
+    <string name="aboutApp">О приложении</string>
+
+    <string name="buttonChooseOffice">Выбрать</string>
+    <string name="fragmentOfficeTitle">Выберите отделение:</string>
 </resources>
