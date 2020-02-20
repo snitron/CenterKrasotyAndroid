@@ -4,10 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.nitronapps.centerkrasoty.R
+import com.nitronapps.centerkrasoty.ui.about.view.AboutFragment
 import com.nitronapps.centerkrasoty.ui.chooseOffice.view.ChooseOfficeFragment
+import com.nitronapps.centerkrasoty.ui.chooseService.view.ChooseServiceFragment
 import com.nitronapps.centerkrasoty.ui.login.view.LoginActivity
+import com.nitronapps.centerkrasoty.ui.main.presenter.FragmentType
 import com.nitronapps.centerkrasoty.ui.main.presenter.MainPresenter
 import com.nitronapps.centerkrasoty.ui.main.presenter.TransactionStatus
+import kotlinx.android.synthetic.main.activity_main.*
 import moxy.InjectViewState
 import moxy.MvpAppCompatActivity
 import moxy.MvpAppCompatFragment
@@ -23,20 +27,31 @@ interface MainView: MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setFragmentByStatus(status: TransactionStatus)
 
-
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun setFragmentByType(type: FragmentType)
 }
 
 interface MainFragmentRemote{
     fun calledCloseByFragment(status: TransactionStatus)
 }
 
-class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView, MainFragmentRemote {
+class MainActivity : MvpAppCompatActivity(R.layout.activity_main),
+    MainView,
+    MainFragmentRemote{
     private val presenter by moxyPresenter { MainPresenter(applicationContext) }
     lateinit var tmpFragment: MvpAppCompatFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        bottomNavigationView.setOnNavigationItemReselectedListener {
+            when(it.itemId) {
+                R.id.itemInfo -> {
+                    presenter.invokedByBottomNavigationView(FragmentType.ABOUT)
+                }
+            }
+        }
     }
 
     override fun startLoginPage() {
@@ -54,14 +69,30 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView, Mai
         when(status){
             TransactionStatus.OFFICE ->
                 replaceableFragment = ChooseOfficeFragment(this)
+
+            TransactionStatus.SERVICE ->
+                replaceableFragment = ChooseServiceFragment()
         }
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.frameLayout, replaceableFragment)
+            .replace(R.id.frameLayout, replaceableFragment)
             .commitNow()
     }
 
     override fun calledCloseByFragment(status: TransactionStatus) {
         presenter.startByCondition(status)
+    }
+
+    override fun setFragmentByType(type: FragmentType) {
+        var replaceableFragment = MvpAppCompatFragment()
+
+        when(type) {
+            FragmentType.ABOUT ->
+                replaceableFragment = AboutFragment()
+        }
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, replaceableFragment)
+            .commitNow()
     }
 }

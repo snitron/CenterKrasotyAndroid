@@ -22,4 +22,8 @@
 
     <string name="buttonChooseOffice">Выбрать</string>
     <string name="fragmentOfficeTitle">Выберите отделение:</string>
+    <string name="fragmentServicesTitle">Выберите услугу:</string>
+
+    <string name="about">Центр Красоты\nВерсия 1.0.0-prealpha\nУсловия использования\n\n\n\nПриложение использует Yandex Static API</string>
+    <string name="nitronApps">Nitron Apps, 2020</string>
 </resources>

@@ -7,7 +7,6 @@
     tools:context=".ui.login.view.LoginActivity">
 
     <TextView
-        android:id="@+id/textViewOfficeAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

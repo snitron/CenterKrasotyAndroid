@@ -12,8 +12,7 @@ import com.nitronapps.centerkrasoty.data.entity.Office
 import com.nitronapps.centerkrasoty.ui.chooseOffice.view.ChooseOfficeItemRemoteInterface
 import com.squareup.picasso.Picasso
 
-class ChooseOfficeItemAdapter(val offices: Array<Office>, val remote: ChooseOfficeItemRemoteInterface): RecyclerView.Adapter<ChooseOfficeItemAdapter.ChooseOfficeItemViewHolder>() {
-
+class ChooseOfficeItemAdapter(private val offices: Array<Office>, val remote: ChooseOfficeItemRemoteInterface): RecyclerView.Adapter<ChooseOfficeItemAdapter.ChooseOfficeItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseOfficeItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_office, parent, false)
 
