@@ -4,12 +4,11 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/AppTheme">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:theme="?attr/actionBarTheme"
-        android:id="@+id/toolbarOffice"
+        android:id="@+id/toolbarMyOrders"
         android:background="?attr/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,25 +16,25 @@
         app:layout_constraintEnd_toEndOf="0"
         app:layout_constraintStart_toStartOf="0"
         app:layout_constraintTop_toTopOf="0"
-        app:title="@string/fragmentOfficeTitle"
-        app:titleTextColor="#fff" />
+        app:title="@string/fragmentMyOrdersTitle"
+        app:titleTextColor="@color/white" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayoutOffice"
+        android:id="@+id/swipeRefershLayoutMyOrders"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="0"
         app:layout_constraintEnd_toEndOf="0"
         app:layout_constraintStart_toStartOf="0"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarOffice">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMyOrders">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewOffices"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:id="@+id/recyclerViewMyOrders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="0"
             app:layout_constraintEnd_toEndOf="0"
             app:layout_constraintStart_toStartOf="0"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarOffice" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbarMyOrders" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

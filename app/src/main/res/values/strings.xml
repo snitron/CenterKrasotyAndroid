@@ -1,29 +1,53 @@
 <resources>
-    <string name="app_name">CenterKrasoty</string>
-    <string name="loginLabel">ВОЙТИ</string>
-    <string name="registrationLabel">ЗАРЕГИСТРИРОВАТЬСЯ</string>
-    <string name="nameLabel">Имя</string>
-    <string name="surnameLabel">Фамилия</string>
-    <string name="loginTextView">Логин/псевдоним</string>
-    <string name="passwordTextView">Пароль</string>
-    <string name="typeSMS">Введите код из СМС</string>
-    
-    <string name="incorrectData">Вы ввели неправильные логин или пароль</string>
-    <string name="serverError">Ошибка сервера, попробуйте ещё раз</string>
-    <string name="loginAlreadyExists">Аккаунт с таким логином/псевдонимом уже существует</string>
-    <string name="phoneAlreadyExists">Аккаунт с этим номером телефона уже существует</string>
-    <string name="incorrectSMS">Вы ввели неправльный номер из SMS</string>
-    <string name="fillAllFields">Заполните все поля</string>
-
-    <string name="createOrder">Создать заказ</string>
-    <string name="myOrders">Мои заказы</string>
-    <string name="myAccount">Мой аккаунт</string>
+    <string name="about">Центр Красоты\10Версия 1.0.0</string>
     <string name="aboutApp">О приложении</string>
-
+    <string name="appUseYandexSAPI">Приложение использует Yandex Static API</string>
+    <string name="app_name">CenterKrasoty</string>
+    <string name="app_name_ru">Центр красоты</string>
+    <string name="areYouSure">Вы уверены?</string>
+    <string name="areYouSureToDelete">Вы действительно отменить заказ</string>
+    <string name="areYouSureToLogout">Вы действительно хотите выйти?</string>
     <string name="buttonChooseOffice">Выбрать</string>
+    <string name="buttonServicesContinue">Продолжить</string>
+    <string name="cancel">Отмена</string>
+    <string name="changeOfficeLabel">Изменить отделение</string>
+    <string name="close">Закрыть</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="createOrder">Создать заказ</string>
+    <string name="delete">Удалить</string>
+    <string name="fillAllFields">Заполните все поля</string>
+    <string name="fragmentMyOrdersTitle">Мои заказы:</string>
     <string name="fragmentOfficeTitle">Выберите отделение:</string>
+    <string name="fragmentPlacesTitle">Выберите место:</string>
     <string name="fragmentServicesTitle">Выберите услугу:</string>
-
-    <string name="about">Центр Красоты\nВерсия 1.0.0-prealpha\nУсловия использования\n\n\n\nПриложение использует Yandex Static API</string>
+    <string name="fragmentTimeTitle">Выберите время:</string>
+    <string name="fragmentUserInfo">Мой аккаунт:</string>
+    <string name="incorrectData">Вы ввели неправильные логин или пароль</string>
+    <string name="incorrectSMS">Вы ввели неправльный номер из SMS</string>
+    <string name="loginAlreadyExists">Аккаунт с таким логином/псевдонимом уже существует</string>
+    <string name="loginLabel">ВОЙТИ</string>
+    <string name="loginTextView">Логин/псевдоним</string>
+    <string name="logout">Выйти</string>
+    <string name="myAccount">Мой аккаунт</string>
+    <string name="myOrders">Мои заказы</string>
+    <string name="nameLabel">Имя</string>
     <string name="nitronApps">Nitron Apps, 2020</string>
+    <string name="noFreeTimes">На это время нет свободных мест для записи</string>
+    <string name="notificationSwitch">Уведомлять за 1 час до начала заказа</string>
+    <string name="officeLabel">Отделение:</string>
+    <string name="orderCreated">Заказ успешно создан</string>
+    <string name="passwordTextView">Пароль</string>
+    <string name="phoneAlreadyExists">Аккаунт с этим номером телефона уже существует</string>
+    <string name="previous_month">Previous month</string>
+    <string name="privacy">Политика конфиденциальности</string>
+    <string name="registrationLabel">ЗАРЕГИСТРИРОВАТЬСЯ</string>
+    <string name="serverError">Ошибка сервера, попробуйте ещё раз</string>
+    <string name="service">Услуга:</string>
+    <string name="settingsLabel">Настройки:</string>
+    <string name="sum">Сумма:</string>
+    <string name="surnameLabel">Фамилия</string>
+    <string name="total">Итого:</string>
+    <string name="typeSMS">Введите код из СМС</string>
+    <string name="youCantChoosePreviousDate">Вы не можете бронировать заказ на прошедшую дату</string>
+    <string name="youHaveAnOrder">Ваше время начинается через 1 час. Услуга:</string>
 </resources>

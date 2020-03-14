@@ -9,7 +9,7 @@ import com.nitronapps.centerkrasoty.ui.chooseOffice.view.ChooseOfficeFragment
 import com.nitronapps.centerkrasoty.ui.chooseOffice.view.ChooseOfficeView
 import moxy.MvpPresenter
 
-class ChooseOfficePresenter(val context: Context): MvpPresenter<ChooseOfficeView>(){
+class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeView>() {
     private lateinit var interactor: ChooseOfficeInteractorInterface
 
     override fun onFirstViewAttach() {
@@ -26,23 +26,23 @@ class ChooseOfficePresenter(val context: Context): MvpPresenter<ChooseOfficeView
 
     }
 
-    fun loadOffices(){
+    fun loadOffices() {
         interactor.getOffices()
     }
 
-    fun setOfficesToUI(offices: Array<Office>){
+    fun setOfficesToUI(offices: Array<Office>) {
         viewState.setRecyclerViewOffices(offices)
     }
 
-    fun onDestroyCalled(){
+    fun onDestroyCalled() {
         interactor.disposeRequests()
     }
 
-    fun sayError(){
+    fun sayError() {
         viewState.sayErrorToUser(context.getString(R.string.serverError))
     }
 
-    fun calledByClosedFragment(){
+    fun calledByClosedFragment() {
 
     }
 }

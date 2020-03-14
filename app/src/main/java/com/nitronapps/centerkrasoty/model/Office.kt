@@ -8,7 +8,8 @@ data class OfficeResponseObject(
     val info: String,
     val city: String,
     val address: String,
-    val geoCoordinates: String
+    val geoCoordinates: String,
+    val startTime: String
 ) {
     fun convertToOfficeDB(): Office {
         return Office(

@@ -10,7 +10,7 @@ import moxy.MvpPresenter
 import java.util.*
 import kotlin.concurrent.thread
 
-class ChooseServicePresenter(val context: Context): MvpPresenter<ChooseServiceView>() {
+class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceView>() {
     private lateinit var interactor: ChooseServiceInteractorInterface
     private lateinit var servicesRaw: Array<Service>
 
@@ -26,11 +26,11 @@ class ChooseServicePresenter(val context: Context): MvpPresenter<ChooseServiceVi
         interactor.disposeRequests()
     }
 
-    fun getServicesFromServer(){
+    fun getServicesFromServer() {
         interactor.getServices()
     }
 
-    fun servicesGot(services: Array<Service>){
+    fun servicesGot(services: Array<Service>) {
         thread {
             servicesRaw = services
 
@@ -42,7 +42,7 @@ class ChooseServicePresenter(val context: Context): MvpPresenter<ChooseServiceVi
         }
     }
 
-    fun sayError(){
+    fun sayError() {
         viewState.sayError(context.getString(R.string.serverError))
     }
 }

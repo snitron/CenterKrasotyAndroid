@@ -11,7 +11,8 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.item_service.view.*
 
-class ChooseServiceItem(private val service:Service): Item<ChooseServiceItem.ChooseServiceViewHolder>(){
+class ChooseServiceItem(private val service: Service) :
+    Item<ChooseServiceItem.ChooseServiceViewHolder>() {
     override fun getLayout(): Int {
         return R.layout.item_service
     }
@@ -27,7 +28,7 @@ class ChooseServiceItem(private val service:Service): Item<ChooseServiceItem.Cho
         viewHolder.textViewPrice.text = service.price.toString().format("%.2f").plus(" \u20BD")
     }
 
-    class ChooseServiceViewHolder(itemView: View): GroupieViewHolder(itemView) {
+    class ChooseServiceViewHolder(itemView: View) : GroupieViewHolder(itemView) {
         val textViewName: TextView = itemView.textViewNameService
         val textViewInfo: TextView = itemView.textViewNameService
         val textViewPrice: TextView = itemView.textViewPriceService

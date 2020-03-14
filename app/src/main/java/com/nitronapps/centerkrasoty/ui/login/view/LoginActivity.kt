@@ -88,7 +88,7 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
                     }
 
                     LoginStatus.SMS_VERIFICATION -> {
-                        if(!editTextPhone.equals("")){
+                        if (!editTextPhone.equals("")) {
                             progressBarLogin.visibility = View.VISIBLE
                             presenter.smsClicked(editTextPhone.text.toString())
                         }

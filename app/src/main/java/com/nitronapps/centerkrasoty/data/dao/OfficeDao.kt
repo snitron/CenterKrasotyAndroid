@@ -9,7 +9,7 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 
 @Dao
-interface OfficeDao{
+interface OfficeDao {
     @Insert
     fun insert(vararg office: Office): Completable
 

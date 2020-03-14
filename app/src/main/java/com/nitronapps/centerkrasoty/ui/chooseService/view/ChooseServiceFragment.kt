@@ -23,7 +23,7 @@ import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface ChooseServiceView: MvpView {
+interface ChooseServiceView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun sayError(text: String)
 
@@ -31,7 +31,7 @@ interface ChooseServiceView: MvpView {
     fun setRecyclerView(data: Map<Int, ArrayList<Service>>)
 }
 
-class ChooseServiceFragment: MvpAppCompatFragment(R.layout.fragment_choose_service),
+class ChooseServiceFragment : MvpAppCompatFragment(R.layout.fragment_choose_service),
     ChooseServiceView {
     private val presenter by moxyPresenter { ChooseServicePresenter(context!!) }
     private lateinit var groupAdapter: GroupAdapter<GroupieViewHolder>
@@ -66,10 +66,10 @@ class ChooseServiceFragment: MvpAppCompatFragment(R.layout.fragment_choose_servi
     }
 
     override fun setRecyclerView(data: Map<Int, ArrayList<Service>>) {
-        for(i in data){
+        for (i in data) {
             val group = ExpandableGroup(ChooseServiceGroupItem(i.value.first().groupName))
 
-            for(j in i.value)
+            for (j in i.value)
                 group.add(ChooseServiceItem(j))
 
             groupAdapter.add(group)

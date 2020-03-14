@@ -1,6 +1,6 @@
 package com.nitronapps.centerkrasoty.api
 
-import com.nitronapps.centerkrasoty.model.SERVER_ADDRESS
+import com.nitronapps.centerkrasoty.utils.SERVER_ADDRESS
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class API {
     companion object {
-        fun getRetrofitAPI() : IAPI {
+        fun getRetrofitAPI(): IAPI {
 
             //TODO: Remove in release version
             val interceptor = HttpLoggingInterceptor()

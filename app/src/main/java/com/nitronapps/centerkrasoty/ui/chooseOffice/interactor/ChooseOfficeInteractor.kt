@@ -14,7 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-interface ChooseOfficeInteractorInterface{
+interface ChooseOfficeInteractorInterface {
     fun getOffices()
     fun prepareUser()
     fun disposeRequests()
@@ -22,7 +22,8 @@ interface ChooseOfficeInteractorInterface{
     fun addOffice(office: Office)
 }
 
-class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter): ChooseOfficeInteractorInterface {
+class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter) :
+    ChooseOfficeInteractorInterface {
     private val officeDatabase: OfficeDatabase
     private val userDatabase: UserDatabase
     private val api: IAPI
@@ -67,7 +68,7 @@ class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter): ChooseOffice
 
     override fun prepareUser() {
         compositeDisposable.add(
-            userDatabase.userDao().getById(0)
+            userDatabase.userDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .subscribe {
                     userInfo = it

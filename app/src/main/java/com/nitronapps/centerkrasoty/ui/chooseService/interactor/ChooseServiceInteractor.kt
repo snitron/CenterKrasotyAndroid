@@ -18,7 +18,8 @@ interface ChooseServiceInteractorInterface {
     fun getServices()
 }
 
-class ChooseServiceInteractor(val presenter: ChooseServicePresenter): ChooseServiceInteractorInterface {
+class ChooseServiceInteractor(val presenter: ChooseServicePresenter) :
+    ChooseServiceInteractorInterface {
     private val officeDatabase: OfficeDatabase
     private val userDatabase: UserDatabase
     private val api: IAPI
@@ -46,7 +47,7 @@ class ChooseServiceInteractor(val presenter: ChooseServicePresenter): ChooseServ
 
     override fun prepareUserAndOffice() {
         compositeDisposable.addAll(
-            userDatabase.userDao().getById(0)
+            userDatabase.userDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .subscribe {
                     userInfo = it

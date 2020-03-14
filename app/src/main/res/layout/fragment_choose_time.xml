@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="vertical"
+    android:id="@+id/contraintLayoutTime"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/viewChooseTimeBorder2"
+        android:background="@color/greyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintTop_toBottomOf="@+id/viewServiceInfoChooseTime" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:theme="?attr/actionBarTheme"
+        android:id="@+id/toolbarChooseTime"
+        android:background="?attr/colorPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintTop_toTopOf="0"
+        app:title="@string/fragmentTimeTitle"
+        app:titleTextColor="@color/white" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChooseTime"
+        android:background="@android:color/white"
+        android:scrollbars="none"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="0"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintHorizontal_bias="0.753"
+        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintTop_toBottomOf="@+id/viewChooseTimeBorder" />
+
+    <TextView
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:id="@+id/textViewDateChooseTime"
+        android:padding="5dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:inputType="none"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonChooseDay"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintTop_toBottomOf="@+id/viewChooseTimeBorder2" />
+
+    <ImageButton
+        android:id="@+id/imageButtonChooseDay"
+        android:background="@color/white"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDateChooseTime"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintTop_toTopOf="@+id/textViewDateChooseTime"
+        app:srcCompat="@drawable/ic_date_range_black" />
+
+    <ProgressBar
+        android:id="@+id/progressBarChooseTime"
+        android:visibility="gone"
+        android:saveEnabled="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="0"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateChooseTime"
+        app:layout_constraintVertical_bias="0.505"
+        style="?android:attr/progressBarStyle" />
+
+    <View
+        android:id="@+id/viewChooseTimeBorder"
+        android:background="@color/greyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateChooseTime" />
+
+    <View
+        android:id="@+id/viewServiceInfoChooseTime"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarChooseTime" />
+
+    <TextView
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:id="@+id/textViewServiceInfoLabelChooseTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="@string/service"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewChooseTimeBorder2"
+        app:layout_constraintStart_toStartOf="@+id/viewServiceInfoChooseTime"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarChooseTime" />
+
+    <TextView
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:id="@+id/textViewServiceInfoValueChooseService"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewServiceInfoLabelChooseTime"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintStart_toEndOf="@+id/textViewServiceInfoLabelChooseTime"
+        app:layout_constraintTop_toTopOf="@+id/textViewServiceInfoLabelChooseTime" />
+</androidx.constraintlayout.widget.ConstraintLayout>

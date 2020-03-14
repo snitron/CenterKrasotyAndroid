@@ -15,7 +15,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import moxy.MvpPresenter
 
-class LoginPresenter(val context: Context): MvpPresenter<LoginView>() {
+class LoginPresenter(val context: Context) : MvpPresenter<LoginView>() {
     private var condition = LoginStatus.LOGIN
     private lateinit var interactor: LoginInteractorInterface
 
@@ -39,8 +39,15 @@ class LoginPresenter(val context: Context): MvpPresenter<LoginView>() {
         interactor.login(login, password)
     }
 
-    fun registrationClicked(login: String, password: String, name: String, surname: String, phone: String){
-        interactor.register(login,
+    fun registrationClicked(
+        login: String,
+        password: String,
+        name: String,
+        surname: String,
+        phone: String
+    ) {
+        interactor.register(
+            login,
             password,
             name,
             surname,
@@ -57,9 +64,9 @@ class LoginPresenter(val context: Context): MvpPresenter<LoginView>() {
     }
 
     fun sayError(type: LoginStatus, code: Int) {
-        when(type){
+        when (type) {
             LoginStatus.LOGIN -> {
-                if(code == 401)
+                if (code == 401)
                     viewState.sayError(context.getString(R.string.incorrectData))
                 else
                     viewState.sayError(context.getString(R.string.serverError))
@@ -68,9 +75,9 @@ class LoginPresenter(val context: Context): MvpPresenter<LoginView>() {
             }
 
             LoginStatus.REGISTRATION -> {
-                if(code == 400)
+                if (code == 400)
                     viewState.sayError(context.getString(R.string.loginAlreadyExists))
-                else if(code == 403)
+                else if (code == 403)
                     viewState.sayError(context.getString(R.string.phoneAlreadyExists))
                 else
                     viewState.sayError(context.getString(R.string.serverError))
@@ -79,7 +86,7 @@ class LoginPresenter(val context: Context): MvpPresenter<LoginView>() {
             }
 
             LoginStatus.SMS_VERIFICATION -> {
-                if(code == 204)
+                if (code == 204)
                     viewState.sayError(context.getString(R.string.incorrectSMS))
                 else
                     viewState.sayError(context.getString(R.string.serverError))
@@ -91,16 +98,16 @@ class LoginPresenter(val context: Context): MvpPresenter<LoginView>() {
         viewState.startMainActivity()
     }
 
-    fun onDestroyCalled(){
+    fun onDestroyCalled() {
         interactor.disposeRequests()
     }
 
-    fun startSMSPage(){
+    fun startSMSPage() {
         condition = LoginStatus.SMS_VERIFICATION
         viewState.setStatus(LoginStatus.SMS_VERIFICATION)
     }
 
-    fun smsClicked(code: String){
+    fun smsClicked(code: String) {
         interactor.sms(code.replace(" ", "").toInt())
     }
 }

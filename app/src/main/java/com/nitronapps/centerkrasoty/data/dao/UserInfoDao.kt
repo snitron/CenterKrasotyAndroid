@@ -12,9 +12,9 @@ import io.reactivex.Observable
 
 
 @Dao
-interface UserInfoDao{
+interface UserInfoDao {
     @Query("SELECT * from userinfo")
-    fun getAll(): Observable<List<UserInfo>>
+    fun getAll(): Observable<UserInfo>
 
     @Insert
     fun insert(data: UserInfo): Completable

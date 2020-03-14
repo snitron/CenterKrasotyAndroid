@@ -22,7 +22,7 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import okhttp3.internal.notifyAll
 
-interface ChooseOfficeView: MvpView {
+interface ChooseOfficeView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun makeProgressBar(animate: Boolean)
 
@@ -40,7 +40,8 @@ interface ChooseOfficeItemRemoteInterface {
     fun officeChosen(office: Office)
 }
 
-class ChooseOfficeFragment(val remote: MainFragmentRemote): MvpAppCompatFragment(R.layout.fragment_choose_office),
+class ChooseOfficeFragment(val remote: MainFragmentRemote) :
+    MvpAppCompatFragment(R.layout.fragment_choose_office),
     ChooseOfficeView,
     ChooseOfficeItemRemoteInterface {
 

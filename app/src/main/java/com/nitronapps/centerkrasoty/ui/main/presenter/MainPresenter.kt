@@ -8,7 +8,7 @@ import com.nitronapps.centerkrasoty.ui.main.interactor.MainInteractorInterface
 import com.nitronapps.centerkrasoty.ui.view.MainView
 import moxy.MvpPresenter
 
-class MainPresenter(val context: Context): MvpPresenter<MainView>() {
+class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
     lateinit var interactor: MainInteractorInterface
     private var condition = TransactionStatus.OFFICE
     private var isOrderCreating = true
@@ -18,12 +18,12 @@ class MainPresenter(val context: Context): MvpPresenter<MainView>() {
 
         interactor = MainInteractor(this)
 
-        if(interactor.checkLogin())
+        if (interactor.checkLogin())
             viewState.startLoginPage()
         else
             interactor.prepareUser()
 
-        if(interactor.checkOffice())
+        if (interactor.checkOffice())
             condition = TransactionStatus.OFFICE
         else
             condition = TransactionStatus.SERVICE
@@ -32,7 +32,7 @@ class MainPresenter(val context: Context): MvpPresenter<MainView>() {
 
     }
 
-    fun onDestroyCalled(){
+    fun onDestroyCalled() {
         interactor.disposeRequests()
     }
 

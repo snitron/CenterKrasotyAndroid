@@ -6,15 +6,17 @@ import java.util.*
 import kotlin.jvm.internal.Intrinsics
 
 
-data class Order(val date: String,
-                 val finishTime: String,
-                 val id: Int,
-                 val login: String,
-                 val placeId: Int,
-                 val price: Double,
-                 @SerializedName("name") val serviceName: String,
-                 val startTime: String,
-                 val time: Long) {
+data class Order(
+    val date: String,
+    val finishTime: String,
+    val id: Int,
+    val login: String,
+    val placeId: Int,
+    val price: Double,
+    @SerializedName("name") val serviceName: String,
+    val startTime: String,
+    val time: Long
+) {
 
     fun getStartTimeParsed(): Date {
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
@@ -59,3 +61,15 @@ data class Order(val date: String,
         return getStartTimeString() + " - " + getFinishTimeParsed()
     }
 }
+
+data class OrderResponse(
+    val code: Int,
+    val count: Int,
+    val orders: Array<Order>
+)
+
+class PreOrder(
+    val place: Place,
+    val service: Service,
+    val time: Long
+)

@@ -20,7 +20,7 @@ import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface MainView: MvpView {
+interface MainView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun startLoginPage()
 
@@ -31,13 +31,13 @@ interface MainView: MvpView {
     fun setFragmentByType(type: FragmentType)
 }
 
-interface MainFragmentRemote{
+interface MainFragmentRemote {
     fun calledCloseByFragment(status: TransactionStatus)
 }
 
 class MainActivity : MvpAppCompatActivity(R.layout.activity_main),
     MainView,
-    MainFragmentRemote{
+    MainFragmentRemote {
     private val presenter by moxyPresenter { MainPresenter(applicationContext) }
     lateinit var tmpFragment: MvpAppCompatFragment
 
@@ -46,7 +46,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main),
         setContentView(R.layout.activity_main)
 
         bottomNavigationView.setOnNavigationItemReselectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.itemInfo -> {
                     presenter.invokedByBottomNavigationView(FragmentType.ABOUT)
                 }
@@ -66,7 +66,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main),
     override fun setFragmentByStatus(status: TransactionStatus) {
         var replaceableFragment = MvpAppCompatFragment()
 
-        when(status){
+        when (status) {
             TransactionStatus.OFFICE ->
                 replaceableFragment = ChooseOfficeFragment(this)
 
@@ -86,7 +86,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main),
     override fun setFragmentByType(type: FragmentType) {
         var replaceableFragment = MvpAppCompatFragment()
 
-        when(type) {
+        when (type) {
             FragmentType.ABOUT ->
                 replaceableFragment = AboutFragment()
         }
