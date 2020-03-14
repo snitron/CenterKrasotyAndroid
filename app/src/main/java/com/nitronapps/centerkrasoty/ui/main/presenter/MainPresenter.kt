@@ -2,6 +2,7 @@ package com.nitronapps.centerkrasoty.ui.main.presenter
 
 import android.content.Context
 import android.content.Intent
+import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.ui.login.view.LoginActivity
 import com.nitronapps.centerkrasoty.ui.main.interactor.MainInteractor
 import com.nitronapps.centerkrasoty.ui.main.interactor.MainInteractorInterface
@@ -44,6 +45,8 @@ class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
         isOrderCreating = type == FragmentType.CREATE_ORDER
         viewState.setFragmentByType(type)
     }
+
+
 
 }
 

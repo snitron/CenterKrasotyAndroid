@@ -15,6 +15,7 @@ import com.nitronapps.centerkrasoty.utils.fromJson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
 import kotlin.concurrent.thread
 
 interface ChoosePlaceInteractorInterface {
@@ -68,17 +69,24 @@ class ChoosePlaceInteractor(val presenter: ChoosePlacePresenter) :
             userDatabase.userDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+                .subscribe ({
                     userInfo = it
                     getPlaces(groupServiceId)
-                }
+                }, {
+                    presenter.sayDBError()
+                })
         )
     }
 
     override fun getListOfUnavailablePlaces(): ArrayList<Int> {
-        return Gson().fromJson<ArrayList<Int>>(
-            values.getString("unavailablePlaces", "[]")!!
-        )
+        try {
+            return Gson().fromJson<ArrayList<Int>>(
+                values.getString("unavailablePlaces", "[]")!!
+            )
+        } catch (e: Exception) {
+            presenter.sayDBError()
+            return ArrayList()
+        }
     }
 
     override fun disposeRequests() {

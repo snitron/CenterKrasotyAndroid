@@ -11,5 +11,6 @@ data class Service(
     val groupName: String,
     val name: String,
     val info: String,
-    val price: Double
+    val price: Double,
+    val long: Long
 )

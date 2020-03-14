@@ -52,4 +52,10 @@ class ChoosePlacePresenter(val context: Context,
         viewState.closeChoosePlace(place, service)
     }
 
+    fun sayDBError() {
+        viewState.sayError(
+            context.getString(R.string.dbError)
+        )
+    }
+
 }

@@ -23,7 +23,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutChooseTimeInner"
-            android:background="@drawable/button_grey_curved"
+            android:background="@drawable/button_orange_curved"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="0"

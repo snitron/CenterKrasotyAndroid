@@ -30,6 +30,12 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
         interactor.getServices()
     }
 
+    fun sayDBError() {
+        viewState.sayError(
+            context.getString(R.string.dbError)
+        )
+    }
+
     fun servicesGot(services: Array<Service>) {
         thread {
             servicesRaw = services

@@ -70,10 +70,13 @@ class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter) :
         compositeDisposable.add(
             userDatabase.userDao().getAll()
                 .subscribeOn(Schedulers.io())
-                .subscribe {
+                .subscribe ({
                     userInfo = it
                     presenter.loadOffices()
-                }
+                },
+                    {
+                        presenter.sayDBError()
+                    })
         )
     }
 
@@ -85,7 +88,9 @@ class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter) :
         compositeDisposable.add(
             officeDatabase.officeDao().deleteAll()
                 .subscribeOn(Schedulers.io())
-                .subscribe()
+                .subscribe({}, {
+                    presenter.sayDBError()
+                })
         )
     }
 
@@ -93,7 +98,9 @@ class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter) :
         compositeDisposable.add(
             officeDatabase.officeDao().insert(office)
                 .subscribeOn(Schedulers.io())
-                .subscribe()
+                .subscribe({}, {
+                    presenter.sayDBError()
+                })
         )
     }
 

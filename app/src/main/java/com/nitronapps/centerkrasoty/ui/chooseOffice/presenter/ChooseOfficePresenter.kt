@@ -22,8 +22,6 @@ class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeVie
     fun officeChosenByUser(office: Office) {
         interactor.deleteAllOfficesFromDB()
         interactor.addOffice(office)
-
-
     }
 
     fun loadOffices() {
@@ -40,6 +38,12 @@ class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeVie
 
     fun sayError() {
         viewState.sayErrorToUser(context.getString(R.string.serverError))
+    }
+
+    fun sayDBError() {
+        viewState.sayErrorToUser(
+            context.getString(R.string.dbError)
+        )
     }
 
     fun calledByClosedFragment() {

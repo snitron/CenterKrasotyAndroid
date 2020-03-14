@@ -12,7 +12,7 @@ fun Date.getPlused(time: Long): Date {
 }
 
 fun Date.trueBefore(date: Date): Boolean {
-    return this.time <= date.time
+    return this.time < date.time
 }
 
 fun Date.trueAfter(date: Date): Boolean {

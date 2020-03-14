@@ -49,15 +49,19 @@ class ChooseServiceInteractor(val presenter: ChooseServicePresenter) :
         compositeDisposable.addAll(
             userDatabase.userDao().getAll()
                 .subscribeOn(Schedulers.io())
-                .subscribe {
+                .subscribe( {
                     userInfo = it
                 },
+                    {presenter.sayDBError()}
+                    ),
 
             officeDatabase.officeDao().getAll()
                 .subscribeOn(Schedulers.io())
-                .subscribe {
+                .subscribe ({
                     office = it
-                }
+                },
+                    {presenter.sayDBError()}
+                )
         )
     }
 
