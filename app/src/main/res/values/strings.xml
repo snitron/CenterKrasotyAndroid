@@ -1,5 +1,5 @@
 <resources>
-    <string name="about">Центр Красоты\10Версия 1.0.0</string>
+    <string name="about">Центр Красоты\nВерсия 1.0.0</string>
     <string name="aboutApp">О приложении</string>
     <string name="appUseYandexSAPI">Приложение использует Yandex Static API</string>
     <string name="app_name">CenterKrasoty</string>
@@ -38,7 +38,6 @@
     <string name="orderCreated">Заказ успешно создан</string>
     <string name="passwordTextView">Пароль</string>
     <string name="phoneAlreadyExists">Аккаунт с этим номером телефона уже существует</string>
-    <string name="previous_month">Previous month</string>
     <string name="privacy">Политика конфиденциальности</string>
     <string name="registrationLabel">ЗАРЕГИСТРИРОВАТЬСЯ</string>
     <string name="serverError">Ошибка сервера, попробуйте ещё раз</string>

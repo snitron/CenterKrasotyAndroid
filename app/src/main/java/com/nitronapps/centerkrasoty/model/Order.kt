@@ -1,6 +1,7 @@
 package com.nitronapps.centerkrasoty.model
 
 import com.google.gson.annotations.SerializedName
+import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.jvm.internal.Intrinsics
@@ -72,4 +73,36 @@ class PreOrder(
     val place: Place,
     val service: Service,
     val time: Long
-)
+) {
+
+    fun getDurationPretty(): String {
+        return getStartDate() + " - " + getFinishTime()
+    }
+
+    fun getStartDate(): String {
+        val formatter = SimpleDateFormat("HH:mm", Locale("ru", "RU"))
+
+        val date = Date()
+        date.time = time
+
+        return formatter.format(date)
+    }
+
+    fun getFinishTime(): String {
+        val formatter = SimpleDateFormat("HH:mm", Locale("ru", "RU"))
+
+        val date = Date()
+        date.time = time + service.long * 60000
+
+        return formatter.format(date)
+    }
+
+    fun getDate(): String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale("ru", "RU"))
+
+        val date = Date()
+        date.time = time
+
+        return formatter.format(date)
+    }
+}
