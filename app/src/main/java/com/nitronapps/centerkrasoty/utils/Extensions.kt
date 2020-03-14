@@ -1,5 +1,7 @@
 package com.nitronapps.centerkrasoty.utils
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.util.*
 import kotlin.jvm.internal.Intrinsics
 
@@ -30,5 +32,6 @@ fun String.withFirstUpperLetter(): String {
 
     sb.append(substring)
     return sb.toString()
-
 }
+
+inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)

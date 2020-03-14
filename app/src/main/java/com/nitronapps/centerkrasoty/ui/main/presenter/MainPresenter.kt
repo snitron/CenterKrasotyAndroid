@@ -9,7 +9,7 @@ import com.nitronapps.centerkrasoty.ui.view.MainView
 import moxy.MvpPresenter
 
 class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
-    lateinit var interactor: MainInteractorInterface
+    private lateinit var interactor: MainInteractorInterface
     private var condition = TransactionStatus.OFFICE
     private var isOrderCreating = true
 

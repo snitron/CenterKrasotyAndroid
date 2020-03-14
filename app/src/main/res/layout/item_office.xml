@@ -24,45 +24,46 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutOffice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/imageViewOffice"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
-                android:layout_marginTop="4dp"
-                android:scaleType="centerCrop"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="0"
                 app:layout_constraintStart_toStartOf="0"
                 app:layout_constraintTop_toTopOf="0" />
 
             <TextView
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
                 android:id="@+id/textViewOfficeName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="Центр Красоты на Патриарших"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="0"
                 app:layout_constraintStart_toStartOf="0"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewOffice" />
 
             <TextView
-                android:textSize="14sp"
-                android:textStyle="bold"
                 android:id="@+id/textViewOfficeAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Москва, ул. Садовая, д. 302-бис"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/textViewOfficeName"
                 app:layout_constraintStart_toStartOf="@+id/textViewOfficeName"
                 app:layout_constraintTop_toBottomOf="@+id/textViewOfficeName" />
