@@ -55,10 +55,6 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
 
         setStatus(LoginStatus.LOGIN)
 
-        textViewRegistation.setOnClickListener {
-            presenter.setRegistration()
-        }
-
         buttonLogin.setOnClickListener {
             if (!editTextLogin.text.equals("") && !editTextPassword.equals("")) {
                 it.visibility = View.GONE
@@ -111,7 +107,11 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
                 editTextName.visibility = View.GONE
                 editTextSurname.visibility = View.GONE
 
-                textViewRegistation.visibility = View.VISIBLE
+                textViewRegistation.text = getString(R.string.registrationLabel)
+                textViewRegistation.setOnClickListener {
+                    presenter.setRegistration()
+                }
+
                 buttonLogin.text = getString(R.string.loginLabel)
             }
 
@@ -121,9 +121,12 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
                 editTextName.visibility = View.VISIBLE
                 editTextSurname.visibility = View.VISIBLE
 
-                textViewRegistation.visibility = View.INVISIBLE
-                buttonLogin.text = getString(R.string.registrationLabel)
+                textViewRegistation.text = getString(R.string.loginLabel)
+                textViewRegistation.setOnClickListener {
+                    presenter.setLogin()
+                }
 
+                buttonLogin.text = getString(R.string.registrationLabel)
             }
 
             LoginStatus.SMS_VERIFICATION -> {

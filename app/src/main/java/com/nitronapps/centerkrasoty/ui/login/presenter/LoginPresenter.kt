@@ -30,7 +30,7 @@ class LoginPresenter(val context: Context) : MvpPresenter<LoginView>() {
         viewState.setStatus(condition)
     }
 
-    private fun setLogin() {
+    fun setLogin() {
         condition = LoginStatus.LOGIN
         viewState.setStatus(condition)
     }
