@@ -24,7 +24,7 @@ class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
         else
             interactor.prepareUser()
 
-        if (interactor.checkOffice())
+        if(interactor.checkOffice())
             condition = TransactionStatus.OFFICE
         else
             condition = TransactionStatus.SERVICE

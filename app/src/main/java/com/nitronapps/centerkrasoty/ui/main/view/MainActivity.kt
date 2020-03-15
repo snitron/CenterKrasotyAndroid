@@ -3,6 +3,7 @@ package com.nitronapps.centerkrasoty.ui.view
 import android.content.Intent
 import android.os.Bundle
 import com.nitronapps.centerkrasoty.R
+import com.nitronapps.centerkrasoty.model.Place
 import com.nitronapps.centerkrasoty.model.PreOrder
 import com.nitronapps.centerkrasoty.model.Service
 import com.nitronapps.centerkrasoty.ui.about.view.AboutFragment
@@ -44,9 +45,27 @@ interface MainView : MvpView {
 
 interface MainFragmentRemote {
     fun calledCloseByFragment(status: TransactionStatus)
+
+    fun calledCloseByConfirm()
+
+    fun calledCloseByPlace(place: Place, service: Service)
+
+    fun calledCloseByServices(serviceArr: Array<Service>)
+
+    fun calledCloseByTime(service: Service, time: Long)
+
+    fun calledCloseByUserInfo()
+
+
+    fun calledBackByPlace()
+
+    fun calledBackByTime()
+
+
+    fun logoutAndStartLogin()
 }
 
-class MainActivity : MvpAppCompatActivity(R.layout.activity_main),
+class MainActivity: MvpAppCompatActivity(R.layout.activity_main),
     MainView,
     MainFragmentRemote {
     private val presenter by moxyPresenter { MainPresenter(applicationContext) }

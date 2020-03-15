@@ -40,7 +40,7 @@ interface ChooseOfficeItemRemoteInterface {
     fun officeChosen(office: Office)
 }
 
-class ChooseOfficeFragment(val remote: MainFragmentRemote) :
+class ChooseOfficeFragment(private val remote: MainFragmentRemote) :
     MvpAppCompatFragment(R.layout.fragment_choose_office),
     ChooseOfficeView,
     ChooseOfficeItemRemoteInterface {

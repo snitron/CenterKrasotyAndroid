@@ -8,12 +8,15 @@ import com.nitronapps.centerkrasoty.data.UserDatabase
 import com.nitronapps.centerkrasoty.data.entity.Office
 import com.nitronapps.centerkrasoty.data.entity.UserInfo
 import com.nitronapps.centerkrasoty.ui.chooseService.presenter.ChooseServicePresenter
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 interface ChooseServiceInteractorInterface {
-    fun prepareUserAndOffice()
+    fun prepareUserAndOfficeAndGetServices()
     fun disposeRequests()
     fun getServices()
 }
@@ -45,23 +48,19 @@ class ChooseServiceInteractor(val presenter: ChooseServicePresenter) :
         api = API.getRetrofitAPI()
     }
 
-    override fun prepareUserAndOffice() {
-        compositeDisposable.addAll(
-            userDatabase.userDao().getAll()
-                .subscribeOn(Schedulers.io())
-                .subscribe( {
-                    userInfo = it
-                },
-                    {presenter.sayDBError()}
-                    ),
-
-            officeDatabase.officeDao().getAll()
-                .subscribeOn(Schedulers.io())
-                .subscribe ({
-                    office = it
-                },
-                    {presenter.sayDBError()}
-                )
+    override fun prepareUserAndOfficeAndGetServices() {
+        compositeDisposable.add(
+            Observable.zip(
+                    userDatabase.userDao().getAll(),
+                    officeDatabase.officeDao().getAll(),
+                    BiFunction<UserInfo, Office, Unit>{ userInfo, office ->
+                        this.userInfo = userInfo
+                        this.office = office
+                        getServices()
+                    }
+            ).subscribeOn(Schedulers.io())
+                .doOnError { presenter.sayDBError() }
+                .subscribe()
         )
     }
 

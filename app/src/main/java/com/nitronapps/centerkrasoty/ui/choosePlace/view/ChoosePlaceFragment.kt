@@ -12,6 +12,7 @@ import com.nitronapps.centerkrasoty.model.Place
 import com.nitronapps.centerkrasoty.model.Service
 import com.nitronapps.centerkrasoty.ui.choosePlace.adapter.ChoosePlaceAdapter
 import com.nitronapps.centerkrasoty.ui.choosePlace.presenter.ChoosePlacePresenter
+import com.nitronapps.centerkrasoty.ui.view.MainFragmentRemote
 import kotlinx.android.synthetic.main.fragment_choose_place.*
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
@@ -41,7 +42,8 @@ interface ChoosePlaceRemote {
     fun placeChosen(place: Place)
 }
 
-class ChoosePlaceFragment(val service: Service): MvpAppCompatFragment(R.layout.fragment_choose_place),
+class ChoosePlaceFragment(private val remote: MainFragmentRemote,
+                          private val service: Service): MvpAppCompatFragment(R.layout.fragment_choose_place),
         ChoosePlaceView,
         ChoosePlaceRemote{
 
@@ -63,6 +65,11 @@ class ChoosePlaceFragment(val service: Service): MvpAppCompatFragment(R.layout.f
         swipeRefreshLayoutPlace.setOnRefreshListener {
             presenter.getPlaces()
         }
+
+        toolbarChoosePlace.setNavigationIcon(R.drawable.ic_arrow_back)
+        toolbarChoosePlace.setNavigationOnClickListener {
+            remote.calledBackByPlace()
+        }
     }
 
     override fun sayError(text: String) {
@@ -72,8 +79,7 @@ class ChoosePlaceFragment(val service: Service): MvpAppCompatFragment(R.layout.f
     }
 
     override fun closeChoosePlace(place: Place, service: Service) {
-        //TODO: Interaction with main
-
+        remote.calledCloseByPlace(place, service)
     }
 
     override fun placeChosen(place: Place) {

@@ -11,6 +11,7 @@ import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.model.Service
 import com.nitronapps.centerkrasoty.ui.chooseTime.adapter.ChooseTimeAdapter
 import com.nitronapps.centerkrasoty.ui.chooseTime.presenter.ChooseTimePresenter
+import com.nitronapps.centerkrasoty.ui.view.MainFragmentRemote
 import kotlinx.android.synthetic.main.fragment_choose_time.*
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
@@ -49,7 +50,8 @@ interface ChooseTimeRemote {
     fun timeChosen(time: Pair<String, Long>)
 }
 
-class ChooseTimeFragment(val service: Service): MvpAppCompatFragment(R.layout.fragment_choose_time),
+class ChooseTimeFragment(private val remote: MainFragmentRemote,
+                         private val service: Service): MvpAppCompatFragment(R.layout.fragment_choose_time),
     ChooseTimeView,
     ChooseTimeRemote {
 
@@ -71,8 +73,14 @@ class ChooseTimeFragment(val service: Service): MvpAppCompatFragment(R.layout.fr
         textViewDateChooseTime.setOnClickListener {
             presenter.startDatePicker()
         }
+
         imageButtonChooseTime.setOnClickListener {
             presenter.startDatePicker()
+        }
+
+        toolbarChooseTime.setNavigationIcon(R.drawable.ic_arrow_back)
+        toolbarChooseTime.setNavigationOnClickListener {
+            remote.calledBackByTime()
         }
     }
 
@@ -89,7 +97,7 @@ class ChooseTimeFragment(val service: Service): MvpAppCompatFragment(R.layout.fr
     }
 
     override fun closeTime(time: Long) {
-        //TODO: Interaction with main
+        remote.calledCloseByTime(service, time)
     }
 
     override fun setDateInEditText(date: String) {

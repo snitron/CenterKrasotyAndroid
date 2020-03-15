@@ -12,6 +12,8 @@ import com.nitronapps.centerkrasoty.ui.confirm.interactor.ConfirmInteractor
 import com.nitronapps.centerkrasoty.ui.confirm.interactor.ConfirmInteractorInterface
 import com.nitronapps.centerkrasoty.ui.confirm.view.ConfirmView
 import moxy.MvpPresenter
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 class ConfirmPresenter(val context: Context,
@@ -72,7 +74,9 @@ class ConfirmPresenter(val context: Context,
     }
 
     fun setValueToTextView() {
-        viewState.setSumToTextView(value.toString().format("%.2f").plus(" \u20BD"))
+        viewState.setSumToTextView(
+            String.format(Locale("ru", "RU"), "%.2f", value).plus(" \u20BD")
+        )
     }
 
     fun userConfirmedPreOrders() {
