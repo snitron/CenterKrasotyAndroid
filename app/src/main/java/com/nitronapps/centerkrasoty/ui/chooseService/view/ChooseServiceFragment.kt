@@ -32,7 +32,7 @@ interface ChooseServiceView : MvpView {
     fun sayError(text: String)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun closeFragmentByRemote(services: Array<Service>)
+    fun closeFragmentByRemote(services: ArrayList<Service>)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setButtonContinueEnabled(by: Boolean)
@@ -116,7 +116,7 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote):
         }
     }
 
-    override fun closeFragmentByRemote(services: Array<Service>) {
+    override fun closeFragmentByRemote(services: ArrayList<Service>) {
         remote.calledCloseByServices(services)
     }
 

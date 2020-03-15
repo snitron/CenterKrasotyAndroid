@@ -10,4 +10,5 @@
     <color name="carrot">#e67e22</color>
     <color name="white">#ffffff</color>
     <color name="greyButton">#ecf0f1</color>
+    <color name="background">#88ecf0f1</color>
 </resources>

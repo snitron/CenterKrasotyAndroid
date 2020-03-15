@@ -31,13 +31,15 @@ class MainInteractor(presenter: MainPresenter) : MainInteractorInterface {
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries()
+            .fallbackToDestructiveMigration().build()
 
         officeDatabase = Room.databaseBuilder(
             presenter.context,
             OfficeDatabase::class.java,
             "offices_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries()
+            .fallbackToDestructiveMigrationOnDowngrade().build()
 
         api = API.getRetrofitAPI()
     }

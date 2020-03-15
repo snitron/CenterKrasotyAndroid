@@ -13,9 +13,9 @@
         android:background="@color/greyButton"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
-        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewServiceInfoChooseTime" />
 
     <androidx.appcompat.widget.Toolbar
@@ -25,9 +25,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="0"
-        app:layout_constraintStart_toStartOf="0"
-        app:layout_constraintTop_toTopOf="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:title="@string/fragmentTimeTitle"
         app:titleTextColor="@color/white" />
 
@@ -37,10 +37,10 @@
         android:scrollbars="none"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="0"
-        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.753"
-        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewChooseTimeBorder" />
 
     <TextView
@@ -59,7 +59,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonChooseTime"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewChooseTimeBorder2" />
 
     <ImageButton
@@ -71,7 +71,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewDateChooseTime"
-        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewDateChooseTime"
         app:srcCompat="@drawable/ic_date_range_black" />
 
@@ -81,9 +81,9 @@
         android:saveEnabled="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="0"
-        app:layout_constraintEnd_toEndOf="0"
-        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDateChooseTime"
         app:layout_constraintVertical_bias="0.505"
         style="?android:attr/progressBarStyle" />
@@ -94,16 +94,16 @@
         android:layout_width="wrap_content"
         android:layout_height="2dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="0"
-        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDateChooseTime" />
 
     <View
         android:id="@+id/viewServiceInfoChooseTime"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        app:layout_constraintEnd_toEndOf="0"
-        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarChooseTime" />
 
     <TextView
@@ -130,7 +130,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewServiceInfoLabelChooseTime"
-        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewServiceInfoLabelChooseTime"
         app:layout_constraintTop_toTopOf="@+id/textViewServiceInfoLabelChooseTime" />
 </androidx.constraintlayout.widget.ConstraintLayout>

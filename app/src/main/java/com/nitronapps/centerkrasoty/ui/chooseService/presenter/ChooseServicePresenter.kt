@@ -9,6 +9,7 @@ import com.nitronapps.centerkrasoty.ui.chooseService.view.ChooseServiceView
 import moxy.MvpPresenter
 import java.lang.String
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 
@@ -118,6 +119,6 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
     fun confirmButtonClicked(){
         val servicesToSend = servicesRaw.filter { chosenIds.contains(it.id) }
 
-        viewState.closeFragmentByRemote(servicesToSend.toTypedArray())
+        viewState.closeFragmentByRemote(ArrayList(servicesToSend))
     }
 }

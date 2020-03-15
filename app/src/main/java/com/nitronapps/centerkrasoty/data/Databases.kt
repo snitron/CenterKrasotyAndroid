@@ -7,12 +7,12 @@ import com.nitronapps.centerkrasoty.data.dao.UserInfoDao
 import com.nitronapps.centerkrasoty.data.entity.Office
 import com.nitronapps.centerkrasoty.data.entity.UserInfo
 
-@Database(entities = arrayOf(UserInfo::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(UserInfo::class), version = 2, exportSchema = false)
 abstract class UserDatabase : RoomDatabase() {
     abstract fun userDao(): UserInfoDao
 }
 
-@Database(entities = arrayOf(Office::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Office::class), version = 2, exportSchema = false)
 abstract class OfficeDatabase : RoomDatabase() {
     abstract fun officeDao(): OfficeDao
 }

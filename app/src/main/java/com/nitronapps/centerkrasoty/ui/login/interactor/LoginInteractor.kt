@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.room.Room
 import com.nitronapps.centerkrasoty.api.API
 import com.nitronapps.centerkrasoty.api.IAPI
-import com.nitronapps.centerkrasoty.data.OrderDatabase
 import com.nitronapps.centerkrasoty.data.UserDatabase
 import com.nitronapps.centerkrasoty.data.entity.UserInfo
 import com.nitronapps.centerkrasoty.ui.login.presenter.LoginPresenter
@@ -42,6 +41,8 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
     override fun login(login: String, password: String) {
         compositeDisposable.add(
             api.loginByPassword(login, password, "")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe({
                     if (it.code == 200) {
                         val user = UserInfo(0, it.token)

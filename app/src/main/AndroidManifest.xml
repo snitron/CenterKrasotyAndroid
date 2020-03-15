@@ -20,7 +20,7 @@
         android:testOnly="true"
         android:theme="@style/AppTheme">
         <receiver
-            android:name="com.nitronapps.centerkrasoty.broadcast.NotificationBroadcastReceiver"
+            android:name="com.nitronapps.centerkrasoty.broadcast.NotificationBroadcastReciever"
             android:enabled="true"
             android:exported="true" />
 

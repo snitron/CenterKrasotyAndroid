@@ -13,9 +13,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="0"
-        app:layout_constraintStart_toStartOf="0"
-        app:layout_constraintTop_toTopOf="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:title="@string/fragmentPlacesTitle"
         app:titleTextColor="#fff" />
 
@@ -23,9 +23,9 @@
         android:id="@+id/swipeRefreshLayoutPlace"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="0"
-        app:layout_constraintEnd_toEndOf="0"
-        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarChoosePlace">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,10 +36,10 @@
                 android:id="@+id/view3"
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
-                app:layout_constraintEnd_toEndOf="0"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="0"
-                app:layout_constraintTop_toTopOf="0" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:textSize="18sp"
@@ -62,9 +62,9 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="1dp"
                 android:layout_marginEnd="2dp"
-                app:layout_constraintBottom_toBottomOf="0"
-                app:layout_constraintEnd_toEndOf="0"
-                app:layout_constraintStart_toStartOf="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view3" />
 
             <TextView
@@ -78,7 +78,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewChoosePlaceServiceName"
-                app:layout_constraintEnd_toEndOf="0"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textViewChoosePlaceServiceName"
                 app:layout_constraintTop_toTopOf="@+id/textViewChoosePlaceServiceName" />
         </androidx.constraintlayout.widget.ConstraintLayout>
