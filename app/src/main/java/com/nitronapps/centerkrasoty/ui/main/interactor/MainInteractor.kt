@@ -15,6 +15,7 @@ interface MainInteractorInterface {
     fun checkOffice(): Boolean
     fun disposeRequests()
     fun prepareUser()
+    fun deleteAllData()
 }
 
 class MainInteractor(presenter: MainPresenter) : MainInteractorInterface {
@@ -61,6 +62,18 @@ class MainInteractor(presenter: MainPresenter) : MainInteractorInterface {
 
     override fun checkOffice(): Boolean {
         return officeDatabase.officeDao().getRowCount() == 0
+    }
+
+    override fun deleteAllData() {
+        compositeDisposable.addAll(
+            userDatabase.userDao().deleteAll()
+                .subscribeOn(Schedulers.io())
+                .subscribe(), //TODO: Maybe sayDBError?
+
+            officeDatabase.officeDao().deleteAll()
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+        )
     }
 
 }

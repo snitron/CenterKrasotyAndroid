@@ -11,6 +11,7 @@ import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.model.PreOrder
 import com.nitronapps.centerkrasoty.ui.confirm.adapter.ConfirmAdapter
 import com.nitronapps.centerkrasoty.ui.confirm.presenter.ConfirmPresenter
+import com.nitronapps.centerkrasoty.ui.view.MainFragmentRemote
 import kotlinx.android.synthetic.main.fragment_choose_service.*
 import kotlinx.android.synthetic.main.fragment_confirm.*
 import moxy.MvpAppCompatFragment
@@ -48,7 +49,10 @@ interface ConfirmRemote {
     fun deleteItem(preOrder: PreOrder)
 }
 
-class ConfirmFragment(preOrders: ArrayList<PreOrder>): MvpAppCompatFragment(R.layout.fragment_confirm),
+class ConfirmFragment(
+    val remote: MainFragmentRemote,
+    val preOrders: ArrayList<PreOrder>
+): MvpAppCompatFragment(R.layout.fragment_confirm),
         ConfirmView,
         ConfirmRemote {
 
@@ -126,6 +130,6 @@ class ConfirmFragment(preOrders: ArrayList<PreOrder>): MvpAppCompatFragment(R.la
     }
 
     override fun closeConfirm() {
-        //TODO: Interaction with main
+        remote.calledCloseByConfirm()
     }
 }

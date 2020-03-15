@@ -27,4 +27,7 @@ interface UserInfoDao {
 
     @Query("SELECT COUNT(id) FROM userinfo")
     fun getRowCount(): Int
+
+    @Query("DELETE FROM userinfo")
+    fun deleteAll(): Completable
 }

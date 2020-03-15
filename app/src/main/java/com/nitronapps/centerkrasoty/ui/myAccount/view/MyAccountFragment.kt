@@ -1,5 +1,6 @@
 package com.nitronapps.centerkrasoty.ui.myAccount.view
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Toast
 import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.data.entity.Office
 import com.nitronapps.centerkrasoty.ui.myAccount.presenter.MyAccountPresenter
+import com.nitronapps.centerkrasoty.ui.view.MainFragmentRemote
 import com.nitronapps.centerkrasoty.utils.withFirstUpperLetter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_my_account.*
@@ -33,9 +35,12 @@ interface MyAccountView: MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setUser(name: String, surname: String)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun closeMyAccountAndChangeOffice()
 }
 
-class MyAccountFragment: MvpAppCompatFragment(R.layout.fragment_choose_time),
+class MyAccountFragment(val remote: MainFragmentRemote): MvpAppCompatFragment(R.layout.fragment_choose_time),
         MyAccountView {
 
     private val presenter by moxyPresenter { MyAccountPresenter(context!!) }
@@ -53,6 +58,18 @@ class MyAccountFragment: MvpAppCompatFragment(R.layout.fragment_choose_time),
 
         switchNotification.setOnCheckedChangeListener { _, b ->
             presenter.switchChanged(b)
+        }
+
+        toolbarMyAccount.inflateMenu(R.menu.user_info_menu)
+        toolbarMyAccount.setOnMenuItemClickListener{
+
+            AlertDialog.Builder(context)
+                .setTitle(R.string.areYouSureToLogout)
+                .setPositiveButton(R.string.logout) { dialog, _ -> remote.logoutAndStartLogin(); dialog.dismiss() }
+                .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.cancel() }
+                .show()
+
+            return@setOnMenuItemClickListener true
         }
     }
 
@@ -96,4 +113,10 @@ class MyAccountFragment: MvpAppCompatFragment(R.layout.fragment_choose_time),
             switchNotification.isChecked = by
         }
     }
+
+    override fun closeMyAccountAndChangeOffice() {
+        remote.calledCloseByMyAccount()
+    }
+
+
 }
