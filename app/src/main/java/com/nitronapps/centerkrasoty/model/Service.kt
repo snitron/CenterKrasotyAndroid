@@ -1,7 +1,7 @@
 package com.nitronapps.centerkrasoty.model
 
 data class ServiceResponse(
-    val services: Array<Service>,
+    val services: ArrayList<Service>,
     val code: Int
 )
 

@@ -58,7 +58,7 @@ class ChoosePlaceInteractor(val presenter: ChoosePlacePresenter) :
                 .filter { it.code == 200 }
                 .map { it.places }
                 .subscribe(
-                    { presenter.placesGot(ArrayList(it.toList())) },
+                    { presenter.placesGot(ArrayList(it)) },
                     { presenter.sayError() }
                 )
         )

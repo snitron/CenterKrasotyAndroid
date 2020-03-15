@@ -35,12 +35,14 @@ class ConfirmPresenter(val context: Context,
         viewState.sayError(
             context.getString(R.string.serverError)
         )
+        viewState.setProgressBarVisible(false)
     }
 
     fun sayDBError() {
         viewState.sayError(
             context.getString(R.string.dbError)
         )
+        viewState.setProgressBarVisible(false)
     }
 
     fun onDestroyCalled(){

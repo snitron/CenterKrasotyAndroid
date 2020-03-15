@@ -12,7 +12,7 @@ import kotlin.concurrent.thread
 
 class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceView>() {
     private lateinit var interactor: ChooseServiceInteractorInterface
-    private lateinit var servicesRaw: Array<Service>
+    private lateinit var servicesRaw: ArrayList<Service>
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -36,7 +36,7 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
         )
     }
 
-    fun servicesGot(services: Array<Service>) {
+    fun servicesGot(services: ArrayList<Service>) {
         thread {
             servicesRaw = services
 

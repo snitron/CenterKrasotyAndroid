@@ -28,7 +28,7 @@ class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeVie
         interactor.getOffices()
     }
 
-    fun setOfficesToUI(offices: Array<Office>) {
+    fun setOfficesToUI(offices: ArrayList<Office>) {
         viewState.setRecyclerViewOffices(offices)
     }
 
@@ -38,15 +38,14 @@ class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeVie
 
     fun sayError() {
         viewState.sayErrorToUser(context.getString(R.string.serverError))
+        viewState.makeProgressBar(false)
     }
 
     fun sayDBError() {
         viewState.sayErrorToUser(
             context.getString(R.string.dbError)
         )
-    }
-
-    fun calledByClosedFragment() {
+        viewState.makeProgressBar(false)
 
     }
 }

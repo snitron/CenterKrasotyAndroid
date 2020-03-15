@@ -69,7 +69,7 @@ class ChooseTimeInteractor(val presenter: ChooseTimePresenter):
                     presenter.setCount(it.count)
                     it.orders
                 }.subscribe(
-                    { presenter.ordersGot(ArrayList(it.toList())) },
+                    { presenter.ordersGot(ArrayList(it)) },
                     { presenter.sayError() }
                 )
         )

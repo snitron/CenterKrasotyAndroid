@@ -60,7 +60,7 @@ class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter) :
                 .map { it.offices }
                 .map { it.map { it.convertToOfficeDB() } }
                 .subscribe(
-                    { presenter.setOfficesToUI(it.toTypedArray()) },
+                    { presenter.setOfficesToUI(ArrayList(it)) },
                     { presenter.sayError() }
                 )
         )

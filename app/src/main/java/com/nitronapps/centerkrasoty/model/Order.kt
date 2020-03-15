@@ -66,7 +66,7 @@ data class Order(
 data class OrderResponse(
     val code: Int,
     val count: Int,
-    val orders: Array<Order>
+    val orders: ArrayList<Order>
 )
 
 class PreOrder(

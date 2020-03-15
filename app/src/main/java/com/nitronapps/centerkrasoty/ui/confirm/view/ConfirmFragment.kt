@@ -11,6 +11,7 @@ import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.model.PreOrder
 import com.nitronapps.centerkrasoty.ui.confirm.adapter.ConfirmAdapter
 import com.nitronapps.centerkrasoty.ui.confirm.presenter.ConfirmPresenter
+import kotlinx.android.synthetic.main.fragment_choose_service.*
 import kotlinx.android.synthetic.main.fragment_confirm.*
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
@@ -65,6 +66,9 @@ class ConfirmFragment(preOrders: ArrayList<PreOrder>): MvpAppCompatFragment(R.la
         super.onActivityCreated(savedInstanceState)
 
         recyclerViewConfirm.layoutManager = LinearLayoutManager(context!!)
+        buttonConfirm.setOnClickListener {
+            presenter.userConfirmedPreOrders()
+        }
     }
 
     override fun sayError(text: String) {

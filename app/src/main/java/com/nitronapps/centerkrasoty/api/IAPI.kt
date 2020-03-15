@@ -38,8 +38,8 @@ interface IAPI {
     @Headers("User-Agent: Center Krasoty Https Nitron Apps Burzhua Web Connector")
     fun getOrders(
         @Field("token") token: String,
-        @Field("groupServiceId") groupServiceId: Int,
-        @Field("date") date: String,
+        @Field("groupServiceId") groupServiceId: Int? = null,
+        @Field("date") date: String? = null,
         @Field("forUser") forUser: Boolean
     ): Observable<OrderResponse>
 

@@ -14,17 +14,19 @@ data class OfficeResponseObject(
 ) {
     fun convertToOfficeDB(): Office {
         return Office(
-            id,
-            name,
-            info,
-            address,
-            city,
-            geoCoordinates
+            id = id,
+            name = name,
+            info = info,
+            address = address,
+            city = city,
+            geoCoords = geoCoordinates,
+            startTime = startTime,
+            finishTime = finishTime
         )
     }
 }
 
 data class OfficeResponse(
-    val offices: Array<OfficeResponseObject>,
+    val offices: ArrayList<OfficeResponseObject>,
     val code: Int
 )

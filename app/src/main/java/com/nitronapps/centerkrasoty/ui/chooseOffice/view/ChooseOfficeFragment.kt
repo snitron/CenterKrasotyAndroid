@@ -27,7 +27,7 @@ interface ChooseOfficeView : MvpView {
     fun makeProgressBar(animate: Boolean)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setRecyclerViewOffices(offices: Array<Office>)
+    fun setRecyclerViewOffices(offices: ArrayList<Office>)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun sayErrorToUser(text: String)
@@ -78,10 +78,9 @@ class ChooseOfficeFragment(val remote: MainFragmentRemote) :
         super.onDestroyView()
     }
 
-    override fun setRecyclerViewOffices(offices: Array<Office>) {
+    override fun setRecyclerViewOffices(offices: ArrayList<Office>) {
         activity!!.runOnUiThread {
             recyclerViewOffices.adapter = ChooseOfficeItemAdapter(offices, this)
-            recyclerViewOffices.run { recyclerViewOffices.notifyAll() }
 
             swipeRefreshLayoutOffice.isRefreshing = false
         }

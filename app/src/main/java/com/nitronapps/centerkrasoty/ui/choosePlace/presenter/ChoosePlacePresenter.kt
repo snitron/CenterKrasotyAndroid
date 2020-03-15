@@ -26,6 +26,7 @@ class ChoosePlacePresenter(val context: Context,
         viewState.sayError(
             context.getString(R.string.serverError)
         )
+        viewState.setSwipeRefreshViewRefreshing(false)
     }
 
     fun getPlaces(){
@@ -56,6 +57,7 @@ class ChoosePlacePresenter(val context: Context,
         viewState.sayError(
             context.getString(R.string.dbError)
         )
+        viewState.setSwipeRefreshViewRefreshing(false)
     }
 
 }

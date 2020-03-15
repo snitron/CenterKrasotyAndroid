@@ -2,7 +2,7 @@ package com.nitronapps.centerkrasoty.model
 
 data class PlaceResponse(
     val code: Int,
-    val places: Array<Place>
+    val places: ArrayList<Place>
 )
 
 class Place(

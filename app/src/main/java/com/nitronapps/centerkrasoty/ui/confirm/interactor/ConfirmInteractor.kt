@@ -56,7 +56,7 @@ class ConfirmInteractor(val presenter: ConfirmPresenter):
                 .filter{ it.code == 200 }
                 .subscribe(
                     {
-
+                        presenter.closeConfirm()
                     },
                     {
                         presenter.sayError()
