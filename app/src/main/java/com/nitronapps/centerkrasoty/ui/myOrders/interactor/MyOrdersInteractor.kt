@@ -77,7 +77,10 @@ class MyOrdersInteractor(val presenter: MyOrdersPresenter) :
                 .filter { it.code == 200 }
                 .subscribe(
                     {
-
+                        presenter.orderDeletedSuccessfully()
+                    },
+                    {
+                        presenter.sayError()
                     }
                 )
         )
