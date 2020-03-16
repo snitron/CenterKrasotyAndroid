@@ -41,7 +41,7 @@ class ChoosePlaceInteractor(val presenter: ChoosePlacePresenter) :
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
         api = API.getRetrofitAPI()
 

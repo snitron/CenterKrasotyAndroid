@@ -12,6 +12,7 @@ import com.nitronapps.centerkrasoty.model.Service
 import com.nitronapps.centerkrasoty.ui.chooseTime.adapter.ChooseTimeAdapter
 import com.nitronapps.centerkrasoty.ui.chooseTime.presenter.ChooseTimePresenter
 import com.nitronapps.centerkrasoty.ui.view.MainFragmentRemote
+import kotlinx.android.synthetic.main.fragment_choose_place.*
 import kotlinx.android.synthetic.main.fragment_choose_time.*
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
@@ -68,7 +69,7 @@ class ChooseTimeFragment(private val remote: MainFragmentRemote,
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        recyclerViewChooseTime.layoutManager = GridLayoutManager(context!!, 3)
+        recyclerViewChooseTime.layoutManager = GridLayoutManager(context!!, 2)
 
         textViewDateChooseTime.setOnClickListener {
             presenter.startDatePicker()
@@ -82,6 +83,8 @@ class ChooseTimeFragment(private val remote: MainFragmentRemote,
         toolbarChooseTime.setNavigationOnClickListener {
             remote.calledBackByTime()
         }
+
+        textViewServiceInfoValueChooseTime.text = service.name
     }
 
     override fun sayError(text: String) {
@@ -117,13 +120,13 @@ class ChooseTimeFragment(private val remote: MainFragmentRemote,
         availability: ArrayList<Boolean>
     ) {
         activity!!.runOnUiThread {
+            recyclerViewChooseTime.layoutManager = GridLayoutManager(context!!, 2)
             recyclerViewChooseTime.adapter = ChooseTimeAdapter(
                 times,
                 availability,
                 context!!,
                 this
             )
-            recyclerViewChooseTime.notifyAll()
         }
     }
 

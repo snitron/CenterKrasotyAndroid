@@ -16,7 +16,9 @@ data class Order(
     val price: Double,
     @SerializedName("name") val serviceName: String,
     val startTime: String,
-    val time: Long
+    val time: Long,
+    @SerializedName("placeInfo") val placeName: String,
+    val placeImage: String
 ) {
 
     fun getStartTimeParsed(): Date {
@@ -35,12 +37,12 @@ data class Order(
 
     fun getDay(): String {
         val formatter =
-            SimpleDateFormat("dd MM yyyy", Locale("ru", "RU"))
+            SimpleDateFormat("dd.MM.yyyy", Locale("ru", "RU"))
 
         val parse =
             SimpleDateFormat("yyyy-MM-dd", Locale("ru", "RU")).parse(date)
 
-        return formatter.format(parse!!)
+        return formatter.format(parse!!).plus(" г.")
     }
 
     fun getStartTimeString(): String {
@@ -59,7 +61,7 @@ data class Order(
 
     fun getTimeRange(): String {
 
-        return getStartTimeString() + " - " + getFinishTimeParsed()
+        return getStartTimeString() + " - " + getFinishTimeString()
     }
 }
 

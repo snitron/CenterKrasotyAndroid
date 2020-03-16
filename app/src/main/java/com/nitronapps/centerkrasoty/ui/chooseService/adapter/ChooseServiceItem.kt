@@ -19,39 +19,30 @@ class ChooseServiceItem(private val service: Service,
                         private val remote: ChooseServiceRemote,
                         private val initChecked: Boolean,
                         private val editable: Boolean) :
-    Item<ChooseServiceItem.ChooseServiceViewHolder>() {
-    private val compositeDisposable = CompositeDisposable()
+    Item<GroupieViewHolder>() {
 
     override fun getLayout(): Int {
         return R.layout.item_service
     }
 
-    override fun bind(viewHolder: ChooseServiceViewHolder, position: Int) {
-        viewHolder.textViewName.text = service.name
-        if (service.info == ".")
-            viewHolder.textViewInfo.visibility = View.GONE
-        else {
-            viewHolder.textViewInfo.visibility = View.VISIBLE
-            viewHolder.textViewInfo.text = service.info
-        }
-        viewHolder.textViewPrice.text = String.format(Locale("ru", "RU") ,"%.2f", service.price).plus(" \u20BD")
-        viewHolder.checkBox.isEnabled = initChecked || editable
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        viewHolder.itemView.textViewNameService.text = service.name
 
-        viewHolder.checkBox.setOnCheckedChangeListener { _, b ->
+        if (service.info == ".")
+            viewHolder.itemView.textViewInfoService.visibility = View.GONE
+        else {
+            viewHolder.itemView.textViewInfoService.visibility = View.VISIBLE
+            viewHolder.itemView.textViewInfoService.text = service.info
+        }
+        viewHolder.itemView.textViewPriceService.text = String.format(Locale("ru", "RU") ,"%.2f", service.price).plus(" \u20BD")
+        viewHolder.itemView.checkBoxService.isEnabled = initChecked || editable
+
+        viewHolder.itemView.checkBoxService.setOnCheckedChangeListener { _, b ->
             remote.checkedService(service, b)
         }
 
-        viewHolder.cardView.setOnTouchListener { _, _ ->
-            viewHolder.checkBox.isChecked = !viewHolder.checkBox.isChecked
-            return@setOnTouchListener true
+        viewHolder.itemView.cardViewService.setOnClickListener {
+            viewHolder.itemView.checkBoxService.isChecked = !viewHolder.itemView.checkBoxService.isChecked
         }
-    }
-
-    class ChooseServiceViewHolder(itemView: View) : GroupieViewHolder(itemView) {
-        val textViewName: TextView = itemView.textViewNameService
-        val textViewInfo: TextView = itemView.textViewNameService
-        val textViewPrice: TextView = itemView.textViewPriceService
-        val checkBox: CheckBox = itemView.checkBoxService
-        val cardView: CardView = itemView.cardViewService
     }
 }

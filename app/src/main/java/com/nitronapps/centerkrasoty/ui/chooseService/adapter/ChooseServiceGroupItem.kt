@@ -1,24 +1,28 @@
-package com.nitronapps.centerkrasoty.ui.chooseService.adapter
-
 import android.view.View
+import android.widget.TextView
 import com.nitronapps.centerkrasoty.R
-import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.ExpandableGroup
+import com.xwray.groupie.ExpandableItem
 import com.xwray.groupie.Item
+import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.item_service_header.view.*
 
+import kotlin.jvm.internal.Intrinsics
 
-class ChooseServiceGroupItem(val title: String) :
-    Item<ChooseServiceGroupItem.ChooseServiceGroupViewHolder>() {
+class ChooseServiceGroupItem(private val title: String) : Item<GroupieViewHolder>(),
+    ExpandableItem {
 
-    override fun getLayout(): Int {
-        return R.layout.item_service_header
+    override fun getLayout(): Int = R.layout.item_service_header
+
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        val textView =
+            viewHolder.itemView.textViewHeaderServiceTitle
+
+        textView.text = title
     }
 
-    override fun bind(viewHolder: ChooseServiceGroupViewHolder, position: Int) {
-        viewHolder.textViewTitle.text = title
+    override fun setExpandableGroup(onToggleListener: ExpandableGroup) {
+        Intrinsics.checkParameterIsNotNull(onToggleListener, "onToggleListener")
     }
 
-    class ChooseServiceGroupViewHolder(itemView: View) : GroupieViewHolder(itemView) {
-        val textViewTitle = itemView.textViewHeaderServiceTitle
-    }
 }

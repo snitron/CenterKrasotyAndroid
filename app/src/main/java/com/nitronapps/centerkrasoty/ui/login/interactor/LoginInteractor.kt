@@ -33,7 +33,7 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
         api = API.getRetrofitAPI()
     }

@@ -71,6 +71,10 @@ class MyAccountFragment(val remote: MainFragmentRemote): MvpAppCompatFragment(R.
 
             return@setOnMenuItemClickListener true
         }
+
+        buttonSettingsOfficeChange.setOnClickListener {
+            remote.calledCloseByMyAccount()
+        }
     }
 
     override fun sayError(text: String) {

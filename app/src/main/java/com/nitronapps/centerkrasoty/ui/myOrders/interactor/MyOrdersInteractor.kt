@@ -34,7 +34,7 @@ class MyOrdersInteractor(val presenter: MyOrdersPresenter) :
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
         api = API.getRetrofitAPI()
     }
@@ -49,7 +49,9 @@ class MyOrdersInteractor(val presenter: MyOrdersPresenter) :
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter { it.code == 200 }
                 .map { it.orders }
-                .subscribe({},
+                .subscribe({
+                    presenter.ordersGot(it)
+                },
                     { presenter.sayError() })
         )
     }
@@ -61,6 +63,7 @@ class MyOrdersInteractor(val presenter: MyOrdersPresenter) :
                 .subscribe(
                     {
                         userInfo = it
+
                         getOrders()
                     },
                     { presenter.sayDBError() })

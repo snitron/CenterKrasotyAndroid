@@ -27,7 +27,9 @@ class MyOrdersAdapter(val orders: ArrayList<Order>,
     override fun onBindViewHolder(holder: MyOrdersViewHolder, position: Int) {
         holder.textViewName.text = orders[position].serviceName
         holder.textViewDuration.text = orders[position].getTimeRange()
+            .plus(" ").plus(orders[position].getDay())
         holder.textViewPrice.text = ""
+        holder.textViewPlace.text = orders[position].placeName
 
         holder.imageButtonDelete.setOnClickListener {
             remote.userChosenToDelete(orders[position])
@@ -38,6 +40,7 @@ class MyOrdersAdapter(val orders: ArrayList<Order>,
         val textViewName = itemView.rootView.textViewItemConfirmServiceName!!
         val textViewDuration = itemView.rootView.textViewItemConfirmServiceDuration!!
         val textViewPrice = itemView.rootView.textViewItemConfirmServicePrice!!
+        val textViewPlace = itemView.rootView.textViewItemOrderPlace
 
         val imageButtonDelete = itemView.rootView.imageButtonItemConfirmDeleteItem
         val imageView = itemView.rootView.imageViewItemConfirmService

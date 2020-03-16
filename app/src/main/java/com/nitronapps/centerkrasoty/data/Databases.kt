@@ -12,7 +12,7 @@ abstract class UserDatabase : RoomDatabase() {
     abstract fun userDao(): UserInfoDao
 }
 
-@Database(entities = arrayOf(Office::class), version = 2, exportSchema = false)
+@Database(entities = arrayOf(Office::class), version = 3, exportSchema = false)
 abstract class OfficeDatabase : RoomDatabase() {
     abstract fun officeDao(): OfficeDao
 }

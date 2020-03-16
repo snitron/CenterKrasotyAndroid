@@ -19,7 +19,7 @@ import kotlin.concurrent.thread
 interface MyAccountInteractorInterface {
     fun disposeRequests()
     fun prepareUserAndOfficeAndGetUserInfo()
-    fun getUserInfo()
+    fun getData()
     fun getNotificationState(): Boolean
     fun setNotificationState(state: Boolean)
 }
@@ -41,13 +41,13 @@ class MyAccountInteractor(val presenter: MyAccountPresenter):
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
         officeDatabase = Room.databaseBuilder(
             presenter.context,
             OfficeDatabase::class.java,
             "offices_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
 
         api = API.getRetrofitAPI()
@@ -55,13 +55,14 @@ class MyAccountInteractor(val presenter: MyAccountPresenter):
         values = presenter.context.getSharedPreferences("values", Context.MODE_PRIVATE)
     }
 
-    override fun getUserInfo() {
+    override fun prepareUserAndOfficeAndGetUserInfo() {
         compositeDisposable.add(
             userDatabase.userDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .subscribe ({
                     userInfo = it
-                    getUserInfo()
+
+                    getData()
                 },
                     {
                     presenter.sayDBError()
@@ -69,7 +70,7 @@ class MyAccountInteractor(val presenter: MyAccountPresenter):
         )
     }
 
-    override fun prepareUserAndOfficeAndGetUserInfo() {
+    override fun getData() {
         compositeDisposable.addAll(
             api.getUser(userInfo.token)
                 .subscribeOn(Schedulers.io())

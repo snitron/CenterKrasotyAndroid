@@ -15,6 +15,8 @@ class MyAccountPresenter(val context: Context) : MvpPresenter<MyAccountView>() {
         super.onFirstViewAttach()
 
         interactor = MyAccountInteractor(this)
+
+        interactor.prepareUserAndOfficeAndGetUserInfo()
         viewState.setSwitchState(interactor.getNotificationState())
     }
 

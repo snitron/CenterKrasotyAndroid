@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".Application">
         <receiver
             android:name="com.nitronapps.centerkrasoty.broadcast.NotificationBroadcastReciever"
             android:enabled="true"

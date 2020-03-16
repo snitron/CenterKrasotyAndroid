@@ -42,13 +42,13 @@ class ChooseTimeInteractor(val presenter: ChooseTimePresenter):
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
         officeDatabase = Room.databaseBuilder(
             presenter.context,
             OfficeDatabase::class.java,
             "offices_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
         api = API.getRetrofitAPI()
 

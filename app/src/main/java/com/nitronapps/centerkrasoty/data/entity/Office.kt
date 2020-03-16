@@ -18,7 +18,8 @@ data class Office(
     @ColumnInfo val city: String,
     @ColumnInfo val geoCoords: String,
     @ColumnInfo val startTime: String,
-    @ColumnInfo val finishTime: String
+    @ColumnInfo val finishTime: String,
+    @ColumnInfo val trueId: Int
 ) {
     @Ignore
     private val formatter =

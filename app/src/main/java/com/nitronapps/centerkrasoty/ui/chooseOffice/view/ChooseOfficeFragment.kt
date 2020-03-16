@@ -94,7 +94,7 @@ class ChooseOfficeFragment(private val remote: MainFragmentRemote) :
     }
 
     override fun closeFragment() {
-        remote.calledCloseByFragment(TransactionStatus.OFFICE)
+        remote.calledCloseByOffice()
     }
 
 }

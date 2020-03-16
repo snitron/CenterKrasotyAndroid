@@ -30,6 +30,7 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
 
         viewState.setButtonContinueEnabled(false)
         viewState.setRecyclerViewRefreshing(true)
+        setValueToViewState()
     }
 
     fun onDestroyCalled() {

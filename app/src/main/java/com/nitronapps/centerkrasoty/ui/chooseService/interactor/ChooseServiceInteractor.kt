@@ -37,30 +37,44 @@ class ChooseServiceInteractor(val presenter: ChooseServicePresenter) :
             presenter.context,
             OfficeDatabase::class.java,
             "offices_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
         userDatabase = Room.databaseBuilder(
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
         api = API.getRetrofitAPI()
     }
 
     override fun prepareUserAndOfficeAndGetServices() {
         compositeDisposable.add(
-            Observable.zip(
-                    userDatabase.userDao().getAll(),
-                    officeDatabase.officeDao().getAll(),
-                    BiFunction<UserInfo, Office, Unit>{ userInfo, office ->
-                        this.userInfo = userInfo
-                        this.office = office
-                        getServices()
+            userDatabase.userDao().getAll()
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        userInfo = it
+
+                        compositeDisposable.add(
+                            officeDatabase.officeDao().getAll()
+                                .subscribeOn(Schedulers.io())
+                                .subscribe(
+                                    {
+                                        office = it
+
+                                        getServices()
+                                    },
+                                    {
+                                        presenter.sayDBError()
+                                    }
+                                )
+                        )
+                    },
+                    {
+                        presenter.sayDBError()
                     }
-            ).subscribeOn(Schedulers.io())
-                .doOnError { presenter.sayDBError() }
-                .subscribe()
+                )
         )
     }
 
@@ -70,7 +84,7 @@ class ChooseServiceInteractor(val presenter: ChooseServicePresenter) :
 
     override fun getServices() {
         compositeDisposable.add(
-            api.getServices(userInfo.token, office.id)
+            api.getServices(userInfo.token, office.trueId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter { it.code == 200 }

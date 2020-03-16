@@ -70,6 +70,8 @@ class ChoosePlaceFragment(private val remote: MainFragmentRemote,
         toolbarChoosePlace.setNavigationOnClickListener {
             remote.calledBackByPlace()
         }
+
+        textViewChoosePlaceServiceInfoValue.text = service.name
     }
 
     override fun sayError(text: String) {

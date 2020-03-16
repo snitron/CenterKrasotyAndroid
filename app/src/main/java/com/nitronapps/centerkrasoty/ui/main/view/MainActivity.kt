@@ -50,7 +50,7 @@ interface MainView : MvpView {
 }
 
 interface MainFragmentRemote {
-    fun calledCloseByFragment(status: TransactionStatus)
+    fun calledCloseByOffice()
 
     fun calledCloseByConfirm()
 
@@ -61,6 +61,7 @@ interface MainFragmentRemote {
     fun calledCloseByTime(service: Service, time: Long)
 
     fun calledCloseByMyAccount()
+
 
     fun calledBackByPlace()
 
@@ -142,8 +143,8 @@ class MainActivity: MvpAppCompatActivity(R.layout.activity_main),
         }
     }
 
-    override fun calledCloseByFragment(status: TransactionStatus) {
-        presenter.startByCondition(status)
+    override fun calledCloseByOffice() {
+        presenter.calledCloseFromOffice()
     }
 
     override fun setFragmentByType(type: FragmentType) {

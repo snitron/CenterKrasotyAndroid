@@ -20,8 +20,15 @@ class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeVie
     }
 
     fun officeChosenByUser(office: Office) {
-        interactor.deleteAllOfficesFromDB()
-        interactor.addOffice(office)
+        interactor.deleteAllOfficesFromDBandAddOffice(office)
+
+        viewState.makeProgressBar(true)
+    }
+
+    fun allSaved() {
+        viewState.makeProgressBar(false)
+
+        viewState.closeFragment()
     }
 
     fun loadOffices() {

@@ -1,5 +1,6 @@
 package com.nitronapps.centerkrasoty.ui.chooseService.view
 
+import ChooseServiceGroupItem
 import android.R.attr.data
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +10,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.model.Service
-import com.nitronapps.centerkrasoty.ui.chooseService.adapter.ChooseServiceGroupItem
 import com.nitronapps.centerkrasoty.ui.chooseService.adapter.ChooseServiceItem
 import com.nitronapps.centerkrasoty.ui.chooseService.presenter.ChooseServicePresenter
 import com.nitronapps.centerkrasoty.ui.view.MainFragmentRemote
@@ -112,7 +112,7 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote):
 
     override fun setRecyclerViewRefreshing(by: Boolean) {
         activity!!.runOnUiThread {
-            swipeRefreshServices.isRefreshing = true
+            swipeRefreshServices.isRefreshing = by
         }
     }
 
@@ -152,7 +152,8 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote):
             }
 
             activity!!.runOnUiThread {
-                setRecyclerViewRefreshing(true)
+                setRecyclerViewRefreshing(false)
+
                 groupAdapter.clear()
                 groupAdapter.addAll(sections)
                 groupAdapter.notifyDataSetChanged()
@@ -181,7 +182,8 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote):
             }
 
             activity!!.runOnUiThread {
-                setRecyclerViewRefreshing(true)
+                setRecyclerViewRefreshing(false)
+
                 groupAdapter.clear()
                 groupAdapter.addAll(sections)
                 groupAdapter.notifyDataSetChanged()

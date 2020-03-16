@@ -14,14 +14,15 @@ data class OfficeResponseObject(
 ) {
     fun convertToOfficeDB(): Office {
         return Office(
-            id = id,
+            id = -1,
             name = name,
             info = info,
             address = address,
             city = city,
             geoCoords = geoCoordinates,
             startTime = startTime,
-            finishTime = finishTime
+            finishTime = finishTime,
+            trueId = id
         )
     }
 }

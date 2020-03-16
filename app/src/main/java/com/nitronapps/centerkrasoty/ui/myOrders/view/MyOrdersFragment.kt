@@ -74,7 +74,7 @@ class MyOrdersFragment: MvpAppCompatFragment(R.layout.fragment_my_orders),
 
     override fun setSwipeRefreshViewLayoutRefreshing(by: Boolean) {
         activity!!.runOnUiThread {
-            swipeRefershLayoutMyOrders.isRefreshing = true
+            swipeRefershLayoutMyOrders.isRefreshing = by
         }
     }
 
@@ -94,7 +94,7 @@ class MyOrdersFragment: MvpAppCompatFragment(R.layout.fragment_my_orders),
         activity!!.runOnUiThread {
             AlertDialog.Builder(context!!)
                 .setTitle(R.string.areYouSure)
-                .setMessage(getString(R.string.areYouSureToDelete) + " ${order.serviceName}")
+                .setMessage(getString(R.string.areYouSureToDelete) + " ${order.serviceName}?")
                 .setPositiveButton(R.string.delete) { dialogInterface, _ ->  presenter.userChosenToDeleteOrder(order); dialogInterface.dismiss()}
                 .setNegativeButton(R.string.cancel) { dialogInterface, _ -> dialogInterface.cancel() }
                 .show()

@@ -39,7 +39,7 @@ class ConfirmInteractor(val presenter: ConfirmPresenter):
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
         api = API.getRetrofitAPI()
 
@@ -56,7 +56,7 @@ class ConfirmInteractor(val presenter: ConfirmPresenter):
                 .filter{ it.code == 200 }
                 .subscribe(
                     {
-                        presenter.closeConfirm()
+                        presenter.transactionSent()
                     },
                     {
                         presenter.sayError()

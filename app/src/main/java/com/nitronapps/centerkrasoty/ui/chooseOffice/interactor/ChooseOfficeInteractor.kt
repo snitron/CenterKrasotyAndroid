@@ -20,6 +20,7 @@ interface ChooseOfficeInteractorInterface {
     fun disposeRequests()
     fun deleteAllOfficesFromDB()
     fun addOffice(office: Office)
+    fun deleteAllOfficesFromDBandAddOffice(office: Office)
 }
 
 class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter) :
@@ -38,13 +39,13 @@ class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter) :
             presenter.context,
             OfficeDatabase::class.java,
             "offices_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
         userDatabase = Room.databaseBuilder(
             presenter.context,
             UserDatabase::class.java,
             "users_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
         api = API.getRetrofitAPI()
 
@@ -98,7 +99,21 @@ class ChooseOfficeInteractor(val presenter: ChooseOfficePresenter) :
         compositeDisposable.add(
             officeDatabase.officeDao().insert(office)
                 .subscribeOn(Schedulers.io())
-                .subscribe({}, {
+                .subscribe({
+                    presenter.allSaved()
+                }, {
+                    presenter.sayDBError()
+                })
+        )
+    }
+
+    override fun deleteAllOfficesFromDBandAddOffice(office: Office) {
+        compositeDisposable.add(
+            officeDatabase.officeDao().deleteAll()
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    addOffice(office)
+                }, {
                     presenter.sayDBError()
                 })
         )

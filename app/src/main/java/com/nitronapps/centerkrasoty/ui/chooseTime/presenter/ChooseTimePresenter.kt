@@ -140,6 +140,7 @@ class ChooseTimePresenter(val context: Context,
 
         viewState.clearRecyclerView()
         viewState.setProgressBarEnabled(true)
+        viewState.setDateInEditText(getPrettyDate())
 
         interactor.getOrders(service.groupId, getServerDate())
     }

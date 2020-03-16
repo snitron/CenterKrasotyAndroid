@@ -1,6 +1,7 @@
 package com.nitronapps.centerkrasoty.ui.main.presenter
 
 import android.content.Context
+import androidx.core.app.NotificationCompat
 import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.model.Place
 import com.nitronapps.centerkrasoty.model.PreOrder
@@ -129,6 +130,12 @@ class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
         viewState.setFragmentByStatus(
             condition
         )
+    }
+
+    fun calledCloseFromOffice() {
+        condition = TransactionStatus.SERVICE
+
+        startByCondition(condition)
     }
 
     fun onBackPressed() {

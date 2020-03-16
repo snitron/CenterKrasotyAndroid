@@ -17,6 +17,9 @@ class MyOrdersPresenter(val context: Context): MvpPresenter<MyOrdersView>() {
         super.onFirstViewAttach()
 
         interactor = MyOrdersInteractor(this)
+        interactor.prepareUserAndGetOrders()
+
+        viewState.setSwipeRefreshViewLayoutRefreshing(true)
     }
 
     fun sayError(){
@@ -41,12 +44,16 @@ class MyOrdersPresenter(val context: Context): MvpPresenter<MyOrdersView>() {
 
     fun getOrders(){
         interactor.getOrders()
+
+        viewState.setSwipeRefreshViewLayoutRefreshing(true)
+        //TODO: Maybe lazy loading for items
     }
 
     fun ordersGot(orders: ArrayList<Order>) {
         this.orders.clear()
         this.orders.addAll(orders)
 
+        viewState.setSwipeRefreshViewLayoutRefreshing(false)
         viewState.setRecyclerView(orders)
     }
 
