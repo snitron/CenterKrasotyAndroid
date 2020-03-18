@@ -7,7 +7,7 @@ import com.nitronapps.centerkrasoty.ui.chooseService.interactor.ChooseServiceInt
 import com.nitronapps.centerkrasoty.ui.chooseService.interactor.ChooseServiceInteractorInterface
 import com.nitronapps.centerkrasoty.ui.chooseService.view.ChooseServiceView
 import moxy.MvpPresenter
-import java.lang.String
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
@@ -19,6 +19,8 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
     private val chosenIds = arrayListOf<Int>()
     private val servicesCurrent = arrayListOf<Service>()
     private val chosenGroups = arrayListOf<Int>()
+    private val cellsWithServiceIds = mutableMapOf<Long, Pair<Int, Int>>()
+    // Pair - serviceId, groupServiceId
     private var value = 0.0
 
     override fun onFirstViewAttach() {
@@ -50,8 +52,11 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
         servicesCurrent.clear()
         chosenIds.clear()
         chosenGroups.clear()
+        cellsWithServiceIds.clear()
 
-        setValueToViewState()
+        //value = 0.0
+
+        //setValueToViewState()
         viewState.setButtonContinueEnabled(false)
     }
 
@@ -95,17 +100,17 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
 
     fun checkedServiceByUser(service: Service, state: Boolean) {
         if (state) {
-            this.chosenIds.add(Integer.valueOf(service.id))
-            this.chosenGroups.add(Integer.valueOf(service.groupId))
+            this.chosenIds.add(service.id)
+            this.chosenGroups.add(service.groupId)
             value += service.price
         } else {
-            this.chosenIds.remove(Integer.valueOf(service.id))
-            this.chosenGroups.remove(Integer.valueOf(service.groupId))
+            this.chosenIds.remove(service.id)
+            this.chosenGroups.remove(service.groupId)
             value -= service.price
         }
         viewState.setButtonContinueEnabled(chosenIds.size != 0)
         setValueToViewState()
-        calculateServicesMapAndSet(false)
+        //calculateServicesMapAndSet(false)
     }
 
     private fun setValueToViewState() {
@@ -121,5 +126,18 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
         val servicesToSend = servicesRaw.filter { chosenIds.contains(it.id) }
 
         viewState.closeFragmentByRemote(ArrayList(servicesToSend))
+    }
+
+    fun getPossibilityOfEditingItem(id: Long): Boolean {
+        return try {
+            (!chosenGroups.contains(cellsWithServiceIds[id]!!.second)
+                    || chosenIds.contains(cellsWithServiceIds[id]!!.first))
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    fun registerCell(id: Long, serviceId: Int, groupServiceId: Int) {
+        cellsWithServiceIds[id] = Pair(serviceId, groupServiceId)
     }
 }

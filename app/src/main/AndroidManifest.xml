@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nitronapps.centerkrasoty"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.nitronapps.centerkrasoty">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,9 +17,13 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme"
-        android:name=".Application">
+        android:name=".Application"
+        android:usesCleartextTraffic="true">
+        <!-- TODO: REMOVE USES CLEARTEXT TRAFFIC BEFORE RELEASE! -->
+
+
         <receiver
-            android:name="com.nitronapps.centerkrasoty.broadcast.NotificationBroadcastReciever"
+            android:name="com.nitronapps.centerkrasoty.broadcast.NotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
 

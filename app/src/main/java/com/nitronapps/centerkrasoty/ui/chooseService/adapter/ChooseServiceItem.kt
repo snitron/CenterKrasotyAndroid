@@ -1,5 +1,6 @@
 package com.nitronapps.centerkrasoty.ui.chooseService.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -14,7 +15,6 @@ import com.xwray.groupie.Item
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.item_service.view.*
 import java.util.*
-
 class ChooseServiceItem(private val service: Service,
                         private val remote: ChooseServiceRemote,
                         private val initChecked: Boolean,
@@ -26,6 +26,8 @@ class ChooseServiceItem(private val service: Service,
     }
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        remote.registerCellById(id, service.id, service.groupId)
+
         viewHolder.itemView.textViewNameService.text = service.name
 
         if (service.info == ".")
@@ -35,14 +37,27 @@ class ChooseServiceItem(private val service: Service,
             viewHolder.itemView.textViewInfoService.text = service.info
         }
         viewHolder.itemView.textViewPriceService.text = String.format(Locale("ru", "RU") ,"%.2f", service.price).plus(" \u20BD")
-        viewHolder.itemView.checkBoxService.isEnabled = initChecked || editable
+        viewHolder.itemView.checkBoxService.isChecked = false
 
-        viewHolder.itemView.checkBoxService.setOnCheckedChangeListener { _, b ->
-            remote.checkedService(service, b)
+        viewHolder.itemView.checkBoxService.setOnCheckedChangeListener { it, b ->
+            if(remote.getPossibilityOfEditing(id) || !b)
+                remote.checkedService(service, b)
+            else
+                it.isChecked = !it.isChecked
+
+            Log.w("checked", "yes")
+            Log.w("checked+id", id.toString())
         }
+
+        Log.w("id+service", id.toString() + " " + service.id)
 
         viewHolder.itemView.cardViewService.setOnClickListener {
-            viewHolder.itemView.checkBoxService.isChecked = !viewHolder.itemView.checkBoxService.isChecked
+            if(remote.getPossibilityOfEditing(id) ||
+                viewHolder.itemView.checkBoxService.isChecked)
+                viewHolder.itemView.checkBoxService.isChecked = !viewHolder.itemView.checkBoxService.isChecked
+            Log.w("id_card", id.toString())
         }
     }
+
+
 }

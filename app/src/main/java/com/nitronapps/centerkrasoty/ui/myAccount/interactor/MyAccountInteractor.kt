@@ -75,7 +75,7 @@ class MyAccountInteractor(val presenter: MyAccountPresenter):
             api.getUser(userInfo.token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .filter { it.code == 0 }
+                .filter { it.code == 200 }
                 .subscribe(
                     {
                         presenter.userInfoGot(it.name, it.surname)

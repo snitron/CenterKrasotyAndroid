@@ -14,19 +14,18 @@ import com.nitronapps.centerkrasoty.utils.withFirstUpperLetter
 import kotlin.jvm.internal.Intrinsics
 
 
-class NotificationBroadcastReciever: BroadcastReceiver() {
+class NotificationBroadcastReceiver: BroadcastReceiver() {
+
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.getBooleanExtra("isOrder", false)) {
             createNotificationChannel(context)
             val stringExtra = intent.getStringExtra("serviceName")
             val serviceName: String = stringExtra!!.withFirstUpperLetter()
 
-            var builder: Notification.Builder
-
-            if (VERSION.SDK_INT >= 26) {
-                builder = Notification.Builder(context, NOTIFICATION_CHANNEL_ID)
+            val builder = if (VERSION.SDK_INT >= 26) {
+                Notification.Builder(context, NOTIFICATION_CHANNEL_ID)
             } else {
-                builder = Notification.Builder(context)
+                Notification.Builder(context)
             }
 
             builder.setContentTitle(context.getString(R.string.app_name_ru))
@@ -46,7 +45,7 @@ class NotificationBroadcastReciever: BroadcastReceiver() {
         if (VERSION.SDK_INT >= 26) {
             val channel =
                 NotificationChannel(NOTIFICATION_CHANNEL_ID,
-                    "",
+                    NOTIFICATION_CHANNEL_ID,
                     NotificationManager.IMPORTANCE_DEFAULT)
             channel.description = ""
 

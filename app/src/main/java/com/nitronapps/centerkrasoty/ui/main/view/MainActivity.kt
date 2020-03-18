@@ -3,6 +3,7 @@ package com.nitronapps.centerkrasoty.ui.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.model.Place
 import com.nitronapps.centerkrasoty.model.PreOrder
@@ -50,6 +51,7 @@ interface MainView : MvpView {
 }
 
 interface MainFragmentRemote {
+
     fun calledCloseByOffice()
 
     fun calledCloseByConfirm()
@@ -75,7 +77,6 @@ class MainActivity: MvpAppCompatActivity(R.layout.activity_main),
     MainView,
     MainFragmentRemote {
     private val presenter by moxyPresenter { MainPresenter(applicationContext) }
-    lateinit var tmpFragment: MvpAppCompatFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,6 +161,8 @@ class MainActivity: MvpAppCompatActivity(R.layout.activity_main),
 
                 FragmentType.MY_ACCOUNT ->
                     replaceableFragment = MyAccountFragment(this)
+
+                else -> {}
             }
 
             supportFragmentManager.beginTransaction()
@@ -172,6 +175,10 @@ class MainActivity: MvpAppCompatActivity(R.layout.activity_main),
         runOnUiThread {
             super.onBackPressed()
         }
+    }
+
+    override fun onBackPressed() {
+        presenter.onBackPressed()
     }
 
     override fun calledBackByPlace() {
@@ -208,7 +215,7 @@ class MainActivity: MvpAppCompatActivity(R.layout.activity_main),
 
     override fun setItemOnBottomNavigationView(id: Int) {
         runOnUiThread {
-            bottomNavigationView.selectedItemId = id
+            findViewById<BottomNavigationItemView>(id).performClick()
         }
     }
 }

@@ -19,6 +19,20 @@ fun Date.trueAfter(date: Date): Boolean {
     return this.time > date.time
 }
 
+fun Date.round(): Date {
+    val calendar = Calendar.getInstance()
+    calendar.time = this
+
+    if(calendar.get(Calendar.MINUTE) <= 30)
+        calendar.set(Calendar.MINUTE, 30)
+    else {
+        calendar.add(Calendar.HOUR, 1)
+        calendar.set(Calendar.MINUTE, 0)
+    }
+
+    return calendar.time
+}
+
 
 fun String.withFirstUpperLetter(): String {
 

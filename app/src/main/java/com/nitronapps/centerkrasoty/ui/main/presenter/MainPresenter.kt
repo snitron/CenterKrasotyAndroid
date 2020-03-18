@@ -135,6 +135,8 @@ class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
     fun calledCloseFromOffice() {
         condition = TransactionStatus.SERVICE
 
+        viewState.setItemOnBottomNavigationView(R.id.itemCreateNewOrder)
+
         startByCondition(condition)
     }
 

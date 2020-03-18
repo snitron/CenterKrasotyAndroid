@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.nitronapps.centerkrasoty.R
-import com.nitronapps.centerkrasoty.broadcast.NotificationBroadcastReciever
+import com.nitronapps.centerkrasoty.broadcast.NotificationBroadcastReceiver
 import com.nitronapps.centerkrasoty.model.PreOrder
 import com.nitronapps.centerkrasoty.model.TransactionRequest
 import com.nitronapps.centerkrasoty.ui.confirm.interactor.ConfirmInteractor
@@ -103,7 +103,7 @@ class ConfirmPresenter(val context: Context,
 
             if(interactor.getNotificationState()) {
                 for(preOrder in preOrders) {
-                    val intent = Intent(context, NotificationBroadcastReciever::class.java)
+                    val intent = Intent(context, NotificationBroadcastReceiver::class.java)
                     intent.putExtra("serviceName", preOrder.service.name)
                     intent.putExtra("isOrder", true)
 

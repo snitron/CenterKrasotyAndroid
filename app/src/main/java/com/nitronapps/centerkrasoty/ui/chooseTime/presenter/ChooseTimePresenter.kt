@@ -9,6 +9,7 @@ import com.nitronapps.centerkrasoty.ui.chooseTime.interactor.ChooseTimeInteracto
 import com.nitronapps.centerkrasoty.ui.chooseTime.interactor.ChooseTimeInteractorInterface
 import com.nitronapps.centerkrasoty.ui.chooseTime.view.ChooseTimeView
 import com.nitronapps.centerkrasoty.utils.getPlused
+import com.nitronapps.centerkrasoty.utils.round
 import com.nitronapps.centerkrasoty.utils.trueAfter
 import com.nitronapps.centerkrasoty.utils.trueBefore
 import moxy.MvpPresenter
@@ -18,8 +19,10 @@ import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 import kotlin.jvm.internal.Intrinsics
 
-class ChooseTimePresenter(val context: Context,
-                          val service: Service) : MvpPresenter<ChooseTimeView>() {
+class ChooseTimePresenter(
+    val context: Context,
+    val service: Service
+) : MvpPresenter<ChooseTimeView>() {
     private lateinit var interactor: ChooseTimeInteractorInterface
 
     private var currentDate = getCalendar().time
@@ -62,13 +65,18 @@ class ChooseTimePresenter(val context: Context,
             val formatterServer = SimpleDateFormat("yyyy-MM-dd", Locale("ru", "RU"))
             val formatterHours = SimpleDateFormat("HH:mm", Locale("ru", "RU"))
 
-            var startTime = interactor.getOffice().getStartTimeParsed(formatterServer.format(currentDate))
-            val finishTime = interactor.getOffice().getFinishTimeParsed(formatterServer.format(currentDate))
+            var startTime =
+                interactor.getOffice().getStartTimeParsed(formatterServer.format(currentDate))
+            if (Calendar.getInstance().time.after(startTime))
+                startTime = Calendar.getInstance().time.round()
+
+            val finishTime =
+                interactor.getOffice().getFinishTimeParsed(formatterServer.format(currentDate))
 
             val times = arrayListOf<Pair<String, Long>>()
             val abilities = arrayListOf<Boolean>()
 
-            while(finishTime.trueAfter(startTime)) {
+            while (finishTime.trueAfter(startTime)) {
                 val serviceFinishDate = startTime.getPlused(service.long * 60000)
 
                 var ability = true
@@ -97,15 +105,21 @@ class ChooseTimePresenter(val context: Context,
 
                 startTime.time += 1800000
 
-                if(!finishTime.after(startTime.getPlused(service.long * 60000)))
+                if (!finishTime.after(startTime.getPlused(service.long * 60000)))
                     break
             }
 
             viewState.setProgressBarEnabled(false)
-            viewState.setRecyclerView(
-                times = times,
-                availability = abilities
-            )
+
+            if (times.isEmpty()) {
+                viewState.sayError(context.getString(R.string.noTimesForDay))
+            } else {
+
+                viewState.setRecyclerView(
+                    times = times,
+                    availability = abilities
+                )
+            }
         }
     }
 
@@ -145,7 +159,7 @@ class ChooseTimePresenter(val context: Context,
         interactor.getOrders(service.groupId, getServerDate())
     }
 
-    fun startDatePicker(){
+    fun startDatePicker() {
         val calendar = Calendar.getInstance()
         calendar.time = currentDate
 

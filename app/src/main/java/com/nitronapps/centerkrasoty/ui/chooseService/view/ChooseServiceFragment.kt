@@ -56,6 +56,10 @@ interface ChooseServiceView : MvpView {
 
 interface ChooseServiceRemote {
     fun checkedService(service: Service, state: Boolean)
+
+    fun getPossibilityOfEditing(id: Long): Boolean
+
+    fun registerCellById(id: Long, serviceId: Int, groupServiceId: Int)
 }
 
 class ChooseServiceFragment(private val remote: MainFragmentRemote):
@@ -145,7 +149,12 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote):
                     val editable: Boolean =
                         !chosenGroups.contains(i.groupId)
 
-                    section.add(ChooseServiceItem(i, this, initChecked, editable))
+                    section.add(ChooseServiceItem(
+                        service = i,
+                        remote = this,
+                        initChecked = initChecked,
+                        editable = editable)
+                    )
                 }
 
                 sections.add(section)
@@ -170,7 +179,7 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote):
                 section.setHeader(
                     ExpandableGroup(
                         ChooseServiceGroupItem(
-                            map.values.first().first().groupName
+                            value.first().groupName
                         )
                     )
                 )
@@ -195,5 +204,13 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote):
         activity!!.runOnUiThread {
             buttonServiceContinue.isEnabled = by
         }
+    }
+
+    override fun getPossibilityOfEditing(id: Long): Boolean {
+        return presenter.getPossibilityOfEditingItem(id)
+    }
+
+    override fun registerCellById(id: Long, serviceId: Int, groupServiceId: Int) {
+        presenter.registerCell(id, serviceId, groupServiceId)
     }
 }
