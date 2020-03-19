@@ -90,7 +90,8 @@ class ConfirmPresenter(val context: Context,
                         placeId = it.place.id,
                         groupId = it.service.groupId,
                         startTime = it.getStartDate(),
-                        finishTime = it.getFinishTime())
+                        finishTime = it.getFinishTime(),
+                        serviceId = it.service.id)
                 }
             )
         }

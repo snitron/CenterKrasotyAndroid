@@ -5,7 +5,8 @@ data class TransactionRequest(
     val startTime: String,
     val finishTime: String,
     val groupId: Int,
-    val placeId: Int
+    val placeId: Int,
+    val serviceId: Int
 )
 
 data class TransactionResponse(

@@ -7,5 +7,6 @@ data class PlaceResponse(
 
 class Place(
     val id: Int,
-    val info: String
+    val info: String,
+    val image: String
 )

@@ -8,9 +8,12 @@ import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.item_service_header.view.*
 
 import kotlin.jvm.internal.Intrinsics
+import kotlin.math.exp
 
 class ChooseServiceGroupItem(private val title: String) : Item<GroupieViewHolder>(),
     ExpandableItem {
+
+    private lateinit var expandableGroup: ExpandableGroup
 
     override fun getLayout(): Int = R.layout.item_service_header
 
@@ -18,11 +21,15 @@ class ChooseServiceGroupItem(private val title: String) : Item<GroupieViewHolder
         val textView =
             viewHolder.itemView.textViewHeaderServiceTitle
 
+        viewHolder.itemView.cardViewServiceHeader.setOnClickListener {
+            expandableGroup.onToggleExpanded()
+        }
+
         textView.text = title
     }
 
     override fun setExpandableGroup(onToggleListener: ExpandableGroup) {
-        Intrinsics.checkParameterIsNotNull(onToggleListener, "onToggleListener")
+        this.expandableGroup = onToggleListener
     }
 
 }

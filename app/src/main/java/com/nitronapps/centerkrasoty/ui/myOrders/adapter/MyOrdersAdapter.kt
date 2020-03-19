@@ -10,6 +10,8 @@ import com.nitronapps.centerkrasoty.model.Place
 import com.nitronapps.centerkrasoty.model.PreOrder
 import com.nitronapps.centerkrasoty.ui.confirm.view.ConfirmRemote
 import com.nitronapps.centerkrasoty.ui.myOrders.view.MyOrdersRemote
+import com.nitronapps.centerkrasoty.utils.SERVER_ADDRESS
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_order.view.*
 
 class MyOrdersAdapter(val orders: ArrayList<Order>,
@@ -34,15 +36,22 @@ class MyOrdersAdapter(val orders: ArrayList<Order>,
         holder.imageButtonDelete.setOnClickListener {
             remote.userChosenToDelete(orders[position])
         }
+
+        Picasso.get()
+            .load(SERVER_ADDRESS.plus(orders[position].placeImage))
+            .resize(80, 80)
+            .centerCrop()
+            .placeholder(R.drawable.ic_placeholder_80_80)
+            .into(holder.imageView)
     }
 
     class MyOrdersViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val textViewName = itemView.rootView.textViewItemConfirmServiceName!!
         val textViewDuration = itemView.rootView.textViewItemConfirmServiceDuration!!
         val textViewPrice = itemView.rootView.textViewItemConfirmServicePrice!!
-        val textViewPlace = itemView.rootView.textViewItemOrderPlace
+        val textViewPlace = itemView.rootView.textViewItemOrderPlace!!
 
-        val imageButtonDelete = itemView.rootView.imageButtonItemConfirmDeleteItem
-        val imageView = itemView.rootView.imageViewItemConfirmService
+        val imageButtonDelete = itemView.rootView.imageButtonItemConfirmDeleteItem!!
+        val imageView = itemView.rootView.imageViewItemConfirmService!!
     }
 }

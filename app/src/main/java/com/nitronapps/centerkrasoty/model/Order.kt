@@ -107,4 +107,14 @@ class PreOrder(
 
         return formatter.format(date)
     }
+
+    fun getDay(): String {
+        val date = Date()
+        date.time = time
+
+        val formatter =
+            SimpleDateFormat("dd.MM.yyyy", Locale("ru", "RU"))
+
+        return formatter.format(date).plus(" г.")
+    }
 }

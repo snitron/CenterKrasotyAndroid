@@ -31,6 +31,7 @@ class ChooseOfficeItemAdapter(
             .load(prepareYandexStaticApi(offices[position].geoCoords))
             .resize(300, 200)
             .centerCrop()
+            .placeholder(R.drawable.ic_placeholder_300_200)
             .into(holder.imageView)
 
         holder.textViewName.text = offices[position].name

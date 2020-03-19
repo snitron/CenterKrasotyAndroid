@@ -1,6 +1,6 @@
 package com.nitronapps.centerkrasoty.api
 
-import com.nitronapps.centerkrasoty.utils.SERVER_ADDRESS
+import com.nitronapps.centerkrasoty.utils.API_ADDRESS
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -23,7 +23,7 @@ class API {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(SERVER_ADDRESS)
+                .baseUrl(API_ADDRESS)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
