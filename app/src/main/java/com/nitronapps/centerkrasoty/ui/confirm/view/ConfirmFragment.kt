@@ -104,7 +104,7 @@ class ConfirmFragment(
     override fun setProgressBarVisible(by: Boolean) {
         activity!!.runOnUiThread {
             progressBarConfirm.visibility = if (by) View.VISIBLE else View.GONE
-            buttonConfirm.visibility = if (!by) View.VISIBLE else View.GONE
+            buttonConfirm.visibility = if (!by) View.VISIBLE else View.INVISIBLE
         }
     }
 

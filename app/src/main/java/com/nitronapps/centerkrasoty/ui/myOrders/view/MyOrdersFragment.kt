@@ -9,8 +9,14 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.model.Order
-import com.nitronapps.centerkrasoty.ui.myOrders.adapter.MyOrdersAdapter
+import com.nitronapps.centerkrasoty.ui.myOrders.adapter.MyOrdersHeader
+import com.nitronapps.centerkrasoty.ui.myOrders.adapter.MyOrdersItem
 import com.nitronapps.centerkrasoty.ui.myOrders.presenter.MyOrdersPresenter
+import com.xwray.groupie.Group
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Section
+import com.xwray.groupie.groupiex.plusAssign
 import kotlinx.android.synthetic.main.fragment_my_orders.*
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
@@ -27,7 +33,7 @@ interface MyOrdersView: MvpView {
     fun clearRecyclerView()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setRecyclerView(orders: ArrayList<Order>)
+    fun setRecyclerView(mappedOrders: Map<String, Pair<ArrayList<Order>, Boolean>>)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setSwipeRefreshViewLayoutRefreshing(by: Boolean)
@@ -41,6 +47,9 @@ class MyOrdersFragment: MvpAppCompatFragment(R.layout.fragment_my_orders),
         MyOrdersView,
         MyOrdersRemote {
 
+    private val presenter by moxyPresenter { MyOrdersPresenter(context!!) }
+    private val groupieAdapter = GroupAdapter<GroupieViewHolder>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,6 +57,7 @@ class MyOrdersFragment: MvpAppCompatFragment(R.layout.fragment_my_orders),
     ): View? {
         return inflater.inflate(R.layout.fragment_my_orders, container, false)
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -57,9 +67,10 @@ class MyOrdersFragment: MvpAppCompatFragment(R.layout.fragment_my_orders),
         }
 
         recyclerViewMyOrders.layoutManager = LinearLayoutManager(context!!)
+        recyclerViewMyOrders.adapter = groupieAdapter
     }
 
-    private val presenter by moxyPresenter { MyOrdersPresenter(context!!) }
+
 
     override fun sayError(text: String) {
         activity!!.runOnUiThread {
@@ -80,13 +91,30 @@ class MyOrdersFragment: MvpAppCompatFragment(R.layout.fragment_my_orders),
 
     override fun clearRecyclerView() {
         activity!!.runOnUiThread {
-            recyclerViewMyOrders.adapter = null
+            groupieAdapter.clear()
         }
     }
 
-    override fun setRecyclerView(orders: ArrayList<Order>) {
+    override fun setRecyclerView(mappedOrders: Map<String, Pair<ArrayList<Order>, Boolean>>) {
         activity!!.runOnUiThread {
-            recyclerViewMyOrders.adapter = MyOrdersAdapter(orders, this)
+            groupieAdapter.clear()
+
+            for( (nameOfHeader, orders) in mappedOrders ) {
+                val section = Section()
+                section.setHeader(MyOrdersHeader(nameOfHeader))
+
+                val items = arrayListOf<Group>()
+                for (order in orders.first) {
+                    items.add(MyOrdersItem(order, orders.second, this))
+                }
+
+                section.addAll(items)
+
+                groupieAdapter += section
+            }
+
+            groupieAdapter.notifyDataSetChanged()
+            setSwipeRefreshViewLayoutRefreshing(false)
         }
     }
 

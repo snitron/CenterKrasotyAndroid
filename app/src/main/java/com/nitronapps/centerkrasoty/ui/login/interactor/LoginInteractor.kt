@@ -111,7 +111,6 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
                     },
                     {
                         presenter.sayError(LoginStatus.SMS_VERIFICATION, 0)
-                        Log.w("SMS_ERROR", it.localizedMessage)
                     }
                 )
         )

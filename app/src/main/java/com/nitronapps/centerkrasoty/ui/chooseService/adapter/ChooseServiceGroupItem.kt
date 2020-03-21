@@ -1,6 +1,9 @@
+import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import com.nitronapps.centerkrasoty.R
+import com.nitronapps.centerkrasoty.ui.chooseService.view.ChooseServiceRemote
 import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.ExpandableItem
 import com.xwray.groupie.Item
@@ -10,7 +13,8 @@ import kotlinx.android.synthetic.main.item_service_header.view.*
 import kotlin.jvm.internal.Intrinsics
 import kotlin.math.exp
 
-class ChooseServiceGroupItem(private val title: String) : Item<GroupieViewHolder>(),
+class ChooseServiceGroupItem(
+    private val title: String) : Item<GroupieViewHolder>(),
     ExpandableItem {
 
     private lateinit var expandableGroup: ExpandableGroup
@@ -23,6 +27,17 @@ class ChooseServiceGroupItem(private val title: String) : Item<GroupieViewHolder
 
         viewHolder.itemView.cardViewServiceHeader.setOnClickListener {
             expandableGroup.onToggleExpanded()
+
+            if(expandableGroup.isExpanded)
+                ViewCompat.animate(viewHolder.itemView.imageViewServiceHeaderArrow)
+                    .setDuration(250)
+                    .rotation(-180.0f)
+                    .start()
+            else
+                ViewCompat.animate(viewHolder.itemView.imageViewServiceHeaderArrow)
+                    .setDuration(250)
+                    .rotation(0f)
+                    .start()
         }
 
         textView.text = title

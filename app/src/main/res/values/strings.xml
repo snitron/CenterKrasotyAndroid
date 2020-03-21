@@ -51,6 +51,10 @@
     <string name="youHaveAnOrder">Ваше время начинается через 1 час. Услуга:</string>
     <string name="dbError">Ошибка, попробуйте ещё раз</string>
     <string name="noTimesForDay">На выбранную дату свободного времени для записи нет</string>
+    <string name="newOrders">Новые заказы</string>
+    <string name="pastOrders">Прошедшие заказы</string>
+    <string name="orderPlace">Место:</string>
+    <string name="orderDate">Дата:</string>
 
     <string name="default_notification_channel_name">nitron_apps_channel_id</string>
 </resources>

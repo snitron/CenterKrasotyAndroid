@@ -8,6 +8,9 @@ import com.nitronapps.centerkrasoty.ui.myOrders.interactor.MyOrdersInteractor
 import com.nitronapps.centerkrasoty.ui.myOrders.interactor.MyOrdersInteractorInterface
 import com.nitronapps.centerkrasoty.ui.myOrders.view.MyOrdersView
 import moxy.MvpPresenter
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 class MyOrdersPresenter(val context: Context): MvpPresenter<MyOrdersView>() {
     private lateinit var interactor: MyOrdersInteractorInterface
@@ -27,7 +30,7 @@ class MyOrdersPresenter(val context: Context): MvpPresenter<MyOrdersView>() {
             context.getString(R.string.serverError)
         )
         viewState.setSwipeRefreshViewLayoutRefreshing(false)
-        viewState.setRecyclerView(orders)
+        calculateOrdersAndSet()
     }
 
     fun sayDBError() {
@@ -35,7 +38,7 @@ class MyOrdersPresenter(val context: Context): MvpPresenter<MyOrdersView>() {
             context.getString(R.string.dbError)
         )
         viewState.setSwipeRefreshViewLayoutRefreshing(false)
-        viewState.setRecyclerView(orders)
+        calculateOrdersAndSet()
     }
 
     fun onDestroyCalled(){
@@ -54,7 +57,7 @@ class MyOrdersPresenter(val context: Context): MvpPresenter<MyOrdersView>() {
         this.orders.addAll(orders)
 
         viewState.setSwipeRefreshViewLayoutRefreshing(false)
-        viewState.setRecyclerView(orders)
+        calculateOrdersAndSet()
     }
 
     fun userChosenToDeleteOrder(order: Order) {
@@ -68,7 +71,43 @@ class MyOrdersPresenter(val context: Context): MvpPresenter<MyOrdersView>() {
 
     fun orderDeletedSuccessfully(){
         viewState.setSwipeRefreshViewLayoutRefreshing(false)
-        viewState.setRecyclerView(orders)
+        calculateOrdersAndSet()
+    }
+
+    fun calculateOrdersAndSet(){
+        viewState.setSwipeRefreshViewLayoutRefreshing(true)
+        viewState.clearRecyclerView()
+
+        thread {
+            val currentDate = Calendar.getInstance().time
+            val data = mutableMapOf<String, Pair<ArrayList<Order>, Boolean>>()
+
+            orders.sort()
+
+            if (orders.size != 0){
+                if (orders.all { it.checkIsFutureOrder(currentDate) }) {
+                    data[context.getString(R.string.newOrders)] = Pair(orders, true)
+                } else {
+                    val newOrders = arrayListOf<Order>()
+                    val pastOrders = arrayListOf<Order>()
+
+                    orders.forEach {
+                        if (it.checkIsFutureOrder(currentDate))
+                            newOrders.add(it)
+                        else
+                            pastOrders.add(it)
+                    }
+
+                    if(newOrders.size != 0)
+                        data[context.getString(R.string.newOrders)] = Pair(newOrders, true)
+
+                    if(pastOrders.size != 0)
+                        data[context.getString(R.string.pastOrders)] = Pair(pastOrders, false)
+                }
+            }
+
+            viewState.setRecyclerView(data)
+        }
     }
 
 }

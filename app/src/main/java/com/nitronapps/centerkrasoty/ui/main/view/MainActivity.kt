@@ -2,6 +2,7 @@ package com.nitronapps.centerkrasoty.ui.view
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.nitronapps.centerkrasoty.R
@@ -44,7 +45,7 @@ interface MainView : MvpView {
     fun setFragmentByType(type: FragmentType)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setItemOnBottomNavigationView(id: Int)
+    fun setItemOnBottomNavigationView()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun startLoginPage()
@@ -213,9 +214,11 @@ class MainActivity: MvpAppCompatActivity(R.layout.activity_main),
         presenter.logout()
     }
 
-    override fun setItemOnBottomNavigationView(id: Int) {
+    override fun setItemOnBottomNavigationView() {
         runOnUiThread {
-            findViewById<BottomNavigationItemView>(id).performClick()
+            bottomNavigationView.menu.getItem(0).isChecked = true
+            findViewById<BottomNavigationItemView>(R.id.itemCreateNewOrder).performClick()
+            bottomNavigationView.selectedItemId = R.id.itemCreateNewOrder
         }
     }
 }

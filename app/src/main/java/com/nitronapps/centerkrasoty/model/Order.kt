@@ -1,6 +1,7 @@
 package com.nitronapps.centerkrasoty.model
 
 import com.google.gson.annotations.SerializedName
+import com.nitronapps.centerkrasoty.utils.trueAfter
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,7 +20,7 @@ data class Order(
     val time: Long,
     @SerializedName("placeInfo") val placeName: String,
     val placeImage: String
-) {
+): Comparable<Order> {
 
     fun getStartTimeParsed(): Date {
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
@@ -30,7 +31,6 @@ data class Order(
 
     fun getFinishTimeParsed(): Date {
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-
 
         return formatter.parse(date + " " + finishTime)!!
     }
@@ -63,6 +63,24 @@ data class Order(
 
         return getStartTimeString() + " - " + getFinishTimeString()
     }
+
+    fun checkIsFutureOrder(currentDate: Date): Boolean {
+        val date = getStartTimeParsed()
+
+        return date.trueAfter(currentDate)
+    }
+
+    override fun compareTo(other: Order): Int {
+        val date = getStartTimeParsed()
+
+        return when {
+            date == other.getStartTimeParsed() -> 0
+            date > other.getStartTimeParsed() -> 1
+            else -> -1
+        }
+    }
+
+
 }
 
 data class OrderResponse(

@@ -21,7 +21,10 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
     private val chosenGroups = arrayListOf<Int>()
     private val cellsWithServiceIds = mutableMapOf<Long, Pair<Int, Int>>()
     // Pair - serviceId, groupServiceId
+
+
     private var value = 0.0
+
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -45,7 +48,7 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
         )
     }
 
-    fun reloadServicesFromServer(){
+    fun reloadServicesFromServer() {
         interactor.disposeRequests()
         interactor.getServices()
 
@@ -54,14 +57,15 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
         chosenGroups.clear()
         cellsWithServiceIds.clear()
 
-        //value = 0.0
+        value = 0.0
 
-        //setValueToViewState()
+        setValueToViewState()
         viewState.setButtonContinueEnabled(false)
     }
 
     fun servicesGot(services: ArrayList<Service>) {
         thread {
+            services.sort()
             servicesRaw = services
             servicesCurrent.clear()
             servicesCurrent.addAll(services)
@@ -75,7 +79,7 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
     }
 
     private fun calculateServicesMapAndSet(first: Boolean) {
-        if(first)
+        if (first)
             viewState.setRecyclerViewRefreshing(true)
 
         val groups = mutableMapOf<Int, ArrayList<Service>>().withDefault { arrayListOf() }
@@ -90,11 +94,11 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
         if (first) {
             viewState.setFirstRecyclerView(groups)
         } else {
-            viewState.setRecyclerViewAgain(
+            /*  viewState.setRecyclerViewAgain(
                 groups,
                 chosenGroups,
                 chosenIds
-            )
+            )*/
         }
     }
 
@@ -122,7 +126,7 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
         viewState.updateTotalValue(sb.toString())
     }
 
-    fun confirmButtonClicked(){
+    fun confirmButtonClicked() {
         val servicesToSend = servicesRaw.filter { chosenIds.contains(it.id) }
 
         viewState.closeFragmentByRemote(ArrayList(servicesToSend))
@@ -140,4 +144,11 @@ class ChooseServicePresenter(val context: Context) : MvpPresenter<ChooseServiceV
     fun registerCell(id: Long, serviceId: Int, groupServiceId: Int) {
         cellsWithServiceIds[id] = Pair(serviceId, groupServiceId)
     }
+
+    fun getChecked(id: Long): Boolean {
+        return chosenIds.contains(
+            cellsWithServiceIds[id]!!.first
+        )
+    }
 }
+

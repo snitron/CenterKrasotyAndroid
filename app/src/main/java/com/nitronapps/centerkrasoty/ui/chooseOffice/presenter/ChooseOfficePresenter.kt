@@ -23,6 +23,7 @@ class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeVie
         interactor.deleteAllOfficesFromDBandAddOffice(office)
 
         viewState.makeProgressBar(true)
+        viewState.setRecyclerViewEnabledBy(false)
     }
 
     fun allSaved() {
@@ -46,6 +47,7 @@ class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeVie
     fun sayError() {
         viewState.sayErrorToUser(context.getString(R.string.serverError))
         viewState.makeProgressBar(false)
+        viewState.setRecyclerViewEnabledBy(true)
     }
 
     fun sayDBError() {
@@ -53,6 +55,8 @@ class ChooseOfficePresenter(val context: Context) : MvpPresenter<ChooseOfficeVie
             context.getString(R.string.dbError)
         )
         viewState.makeProgressBar(false)
+        viewState.setRecyclerViewEnabledBy(true)
+
 
     }
 }

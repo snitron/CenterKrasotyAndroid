@@ -41,12 +41,13 @@ interface ChooseServiceView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setFirstRecyclerView(map: Map<Int, ArrayList<Service>>)
 
+    /*
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setRecyclerViewAgain(
         map: Map<Int, ArrayList<Service>>,
         chosenGroups: ArrayList<Int>,
         chosenIds: ArrayList<Int>
-    )
+    )*/
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setRecyclerViewRefreshing(by: Boolean)
@@ -61,6 +62,8 @@ interface ChooseServiceRemote {
     fun getPossibilityOfEditing(id: Long): Boolean
 
     fun registerCellById(id: Long, serviceId: Int, groupServiceId: Int)
+
+    fun getChecked(id: Long): Boolean
 }
 
 class ChooseServiceFragment(private val remote: MainFragmentRemote) :
@@ -83,6 +86,7 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote) :
 
         swipeRefreshServices.isRefreshing = true
         groupAdapter = GroupAdapter()
+
 
         recyclerViewServices.layoutManager = LinearLayoutManager(context)
         recyclerViewServices.adapter = groupAdapter
@@ -125,68 +129,21 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote) :
         remote.calledCloseByServices(services)
     }
 
-    override fun setRecyclerViewAgain(
-        map: Map<Int, ArrayList<Service>>,
-        chosenGroups: ArrayList<Int>,
-        chosenIds: ArrayList<Int>
-    ) {
-        thread {
-            val sections = ArrayList<Section>()
-
-            for ((_, value) in map) {
-                val section = Section()
-                section.setHeader(
-                    ExpandableGroup(
-                        ChooseServiceGroupItem(
-                            map.values.first().first().groupName
-                        )
-                    )
-                )
-
-                for (i in value) {
-                    val initChecked: Boolean =
-                        chosenIds.contains(i.id)
-
-                    val editable: Boolean =
-                        !chosenGroups.contains(i.groupId)
-
-                    section.add(
-                        ChooseServiceItem(
-                            service = i,
-                            remote = this,
-                            initChecked = initChecked,
-                            editable = editable
-                        )
-                    )
-                }
-
-                sections.add(section)
-            }
-
-            activity!!.runOnUiThread {
-                setRecyclerViewRefreshing(false)
-
-                groupAdapter.clear()
-                groupAdapter.addAll(sections)
-                groupAdapter.notifyDataSetChanged()
-            }
-        }
-    }
-
     override fun setFirstRecyclerView(map: Map<Int, ArrayList<Service>>) {
         activity!!.runOnUiThread {
             groupAdapter.clear()
 
             for ((_, value) in map) {
+
                 groupAdapter += ExpandableGroup(
                     ChooseServiceGroupItem(
                         value.first().groupName
                     )
                 ).apply {
-                    for (i in value)
-                        add(ChooseServiceItem(i, this@ChooseServiceFragment, false, true))
+                    for (i in value) {
+                        add(ChooseServiceItem(i, this@ChooseServiceFragment))
+                    }
                 }
-
             }
 
 
@@ -196,17 +153,21 @@ class ChooseServiceFragment(private val remote: MainFragmentRemote) :
     }
 
 
-override fun setButtonContinueEnabled(by: Boolean) {
-    activity!!.runOnUiThread {
-        buttonServiceContinue.isEnabled = by
+    override fun setButtonContinueEnabled(by: Boolean) {
+        activity!!.runOnUiThread {
+            buttonServiceContinue.isEnabled = by
+        }
     }
-}
 
-override fun getPossibilityOfEditing(id: Long): Boolean {
-    return presenter.getPossibilityOfEditingItem(id)
-}
+    override fun getPossibilityOfEditing(id: Long): Boolean {
+        return presenter.getPossibilityOfEditingItem(id)
+    }
 
-override fun registerCellById(id: Long, serviceId: Int, groupServiceId: Int) {
-    presenter.registerCell(id, serviceId, groupServiceId)
-}
+    override fun registerCellById(id: Long, serviceId: Int, groupServiceId: Int) {
+        presenter.registerCell(id, serviceId, groupServiceId)
+    }
+
+    override fun getChecked(id: Long): Boolean {
+        return presenter.getChecked(id)
+    }
 }

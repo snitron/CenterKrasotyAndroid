@@ -141,6 +141,7 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
                 editTextSurname.visibility = View.GONE
 
                 editTextPhone.text = Editable.Factory.getInstance().newEditable("")
+                editTextPhone.textAlignment = View.TEXT_ALIGNMENT_CENTER
 
                 val slots = UnderscoreDigitSlotsParser().parseSlots("_____")
                 val watcher = MaskFormatWatcher(MaskImpl(slots, true))

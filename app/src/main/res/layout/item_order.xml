@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,19 +28,18 @@
             <ImageView
                 android:id="@+id/imageViewItemConfirmService"
                 android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewItemConfirmServicePrice"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/textViewItemConfirmServiceName" />
 
             <TextView
                 android:id="@+id/textViewItemConfirmServiceName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="TextView"
                 android:textColor="@android:color/black"
@@ -48,34 +47,30 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/imageButtonItemConfirmDeleteItem"
                 app:layout_constraintStart_toEndOf="@+id/imageViewItemConfirmService"
-                app:layout_constraintTop_toTopOf="@+id/imageViewItemConfirmService" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewItemConfirmServiceDuration"
+                android:id="@+id/textViewItemConfirmServiceDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="TextView"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textViewItemConfirmServicePrice"
-                app:layout_constraintStart_toStartOf="@+id/textViewItemOrderPlace"
-                app:layout_constraintTop_toBottomOf="@+id/textViewItemOrderPlace" />
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonItemConfirmDeleteItem"
+                app:layout_constraintStart_toStartOf="@+id/textViewItemOrderPlace" />
 
             <ImageButton
                 android:id="@+id/imageButtonItemConfirmDeleteItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:background="@color/white"
                 android:paddingLeft="5dp"
                 android:paddingTop="20dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewItemConfirmService"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewItemConfirmServiceDateName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageViewItemConfirmService"
                 app:srcCompat="@drawable/ic_delete_black" />
@@ -90,21 +85,47 @@
                 android:textSize="24sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="@+id/textViewItemConfirmServiceName"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewItemConfirmService"
                 app:layout_constraintTop_toBottomOf="@+id/textViewItemConfirmServiceName" />
 
             <TextView
                 android:id="@+id/textViewItemOrderPlace"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="TextView"
                 android:textColor="@android:color/black"
-                app:layout_constraintEnd_toStartOf="@+id/textViewItemConfirmServicePrice"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageViewItemConfirmService"
-                app:layout_constraintTop_toBottomOf="@+id/textViewItemConfirmServiceName" />
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonItemConfirmDeleteItem"
+                app:layout_constraintStart_toEndOf="@+id/textViewItemOrderPlaceName"
+                app:layout_constraintTop_toTopOf="@+id/textViewItemOrderPlaceName" />
+
+            <TextView
+                android:id="@+id/textViewItemOrderPlaceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/orderPlace"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imageViewItemConfirmService"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemConfirmServicePrice" />
+
+            <TextView
+                android:id="@+id/textViewItemConfirmServiceDateName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/orderDate"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewItemOrderPlaceName"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemOrderPlaceName" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

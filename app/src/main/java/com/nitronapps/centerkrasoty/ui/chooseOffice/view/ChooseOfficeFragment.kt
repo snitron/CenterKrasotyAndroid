@@ -33,6 +33,9 @@ interface ChooseOfficeView : MvpView {
     fun sayErrorToUser(text: String)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
+    fun setRecyclerViewEnabledBy(by: Boolean)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
     fun closeFragment()
 }
 
@@ -70,7 +73,10 @@ class ChooseOfficeFragment(private val remote: MainFragmentRemote) :
     }
 
     override fun makeProgressBar(animate: Boolean) {
-        swipeRefreshLayoutOffice.isRefreshing = animate
+        activity!!.runOnUiThread {
+            swipeRefreshLayoutOffice.isRefreshing = animate
+        }
+
     }
 
     override fun onDestroyView() {
@@ -95,6 +101,12 @@ class ChooseOfficeFragment(private val remote: MainFragmentRemote) :
 
     override fun closeFragment() {
         remote.calledCloseByOffice()
+    }
+
+    override fun setRecyclerViewEnabledBy(by: Boolean) {
+        activity!!.runOnUiThread {
+            recyclerViewOffices.isEnabled = by
+        }
     }
 
 }

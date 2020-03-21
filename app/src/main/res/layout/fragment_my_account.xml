@@ -20,7 +20,7 @@
         style="?android:attr/progressBarStyle" />
 
     <androidx.appcompat.widget.Toolbar
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/AppTheme.ActionBar"
         android:id="@+id/toolbarMyAccount"
         android:background="?attr/colorPrimary"
         android:layout_width="0dp"
@@ -99,9 +99,9 @@
 
             <View
                 android:id="@+id/viewBorderUserInfo1"
-                android:background="@color/greyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="2dp"
+                android:background="@color/greyBorder"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -143,9 +143,10 @@
 
             <View
                 android:id="@+id/viewBorederUserInfo2"
-                android:background="@color/greyButton"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/greyBorder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonSettingsOfficeChange" />

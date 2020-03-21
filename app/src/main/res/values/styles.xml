@@ -13,6 +13,7 @@
         <item name="actionMenuTextColor">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/orange</item>
+        
         <item name="colorPrimaryDark">@color/carrot</item>
     </style>
 </resources>

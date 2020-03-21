@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nitronapps.centerkrasoty.R
-import com.nitronapps.centerkrasoty.model.Place
 import com.nitronapps.centerkrasoty.model.PreOrder
 import com.nitronapps.centerkrasoty.ui.confirm.view.ConfirmRemote
 import com.nitronapps.centerkrasoty.utils.SERVER_ADDRESS
@@ -46,7 +45,7 @@ class ConfirmAdapter(val preOrders: ArrayList<PreOrder>,
 
     class ConfirmViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val textViewName = itemView.rootView.textViewItemConfirmServiceName!!
-        val textViewDuration = itemView.rootView.textViewItemConfirmServiceDuration!!
+        val textViewDuration = itemView.rootView.textViewItemConfirmServiceDate!!
         val textViewPrice = itemView.rootView.textViewItemConfirmServicePrice!!
         val textViewPlace = itemView.rootView.textViewItemOrderPlace!!
 

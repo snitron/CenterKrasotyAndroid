@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:theme="?attr/actionBarTheme"
         android:id="@+id/toolbarChoosePlace"
-        android:background="?attr/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +26,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarChoosePlace">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarChoosePlace"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -42,14 +45,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
                 android:id="@+id/textViewChoosePlaceServiceName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="@string/service"
                 android:layout_marginStart="16dp"
+                android:text="@string/service"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/view3"
                 app:layout_constraintStart_toStartOf="@+id/view3"
                 app:layout_constraintTop_toTopOf="@+id/view3" />
@@ -58,29 +61,34 @@
                 android:id="@+id/recyclerViewPlaces"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginBottom="1dp"
-                android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
+                app:layout_constraintTop_toBottomOf="@+id/viewChoosePlaceBorder" />
 
             <TextView
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
                 android:id="@+id/textViewChoosePlaceServiceInfoValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewChoosePlaceServiceName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textViewChoosePlaceServiceName"
                 app:layout_constraintTop_toTopOf="@+id/textViewChoosePlaceServiceName" />
+
+            <View
+                android:id="@+id/viewChoosePlaceBorder"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/greyBorder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -68,7 +68,7 @@ class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
             } else {
                 viewState.setFragmentByType(type)
             }
-            viewState.setItemOnBottomNavigationView(id)
+         //   viewState.setItemOnBottomNavigationView(id)
         }
 
         return precompiledBoolean
@@ -135,7 +135,7 @@ class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
     fun calledCloseFromOffice() {
         condition = TransactionStatus.SERVICE
 
-        viewState.setItemOnBottomNavigationView(R.id.itemCreateNewOrder)
+        viewState.setItemOnBottomNavigationView()
 
         startByCondition(condition)
     }
@@ -173,7 +173,7 @@ class MainPresenter(val context: Context) : MvpPresenter<MainView>() {
         preOrders.clear()
 
         viewState.setFragmentByStatus(TransactionStatus.OFFICE)
-        viewState.setItemOnBottomNavigationView(R.id.itemCreateNewOrder)
+        viewState.setItemOnBottomNavigationView()
     }
 
     fun logout() {

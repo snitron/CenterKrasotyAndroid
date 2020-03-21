@@ -14,11 +14,13 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.item_service.view.*
+import kotlinx.coroutines.processNextEventInCurrentThread
 import java.util.*
-class ChooseServiceItem(private val service: Service,
-                        private val remote: ChooseServiceRemote,
-                        private val initChecked: Boolean,
-                        private val editable: Boolean) :
+
+class ChooseServiceItem(
+    private val service: Service,
+    private val remote: ChooseServiceRemote
+) :
     Item<GroupieViewHolder>() {
 
     override fun getLayout(): Int {
@@ -36,28 +38,28 @@ class ChooseServiceItem(private val service: Service,
             viewHolder.itemView.textViewInfoService.visibility = View.VISIBLE
             viewHolder.itemView.textViewInfoService.text = service.info
         }
-        viewHolder.itemView.textViewPriceService.text = String.format(Locale("ru", "RU") ,"%.2f", service.price).plus(" \u20BD")
-        viewHolder.itemView.checkBoxService.isChecked = false
+        viewHolder.itemView.textViewPriceService.text =
+
+            String.format(Locale("ru", "RU"), "%.2f", service.price).plus(" \u20BD")
+
+        viewHolder.itemView.checkBoxService.setOnCheckedChangeListener(null)
+
+        viewHolder.itemView.checkBoxService.isChecked = remote.getChecked(id)
 
         viewHolder.itemView.checkBoxService.setOnCheckedChangeListener { it, b ->
-            if(remote.getPossibilityOfEditing(id) || !b)
-                remote.checkedService(service, b)
-            else
-                it.isChecked = !it.isChecked
-
-            Log.w("checked", "yes")
-            Log.w("checked+id", id.toString())
+                if ((remote.getPossibilityOfEditing(id) || !b)) {
+                    remote.checkedService(service, b)
+                } else
+                    it.isChecked = !it.isChecked //Changing to "FALSE" state
         }
 
-        Log.w("id+service", id.toString() + " " + service.id)
 
         viewHolder.itemView.cardViewService.setOnClickListener {
-            if(remote.getPossibilityOfEditing(id) ||
-                viewHolder.itemView.checkBoxService.isChecked)
-                viewHolder.itemView.checkBoxService.isChecked = !viewHolder.itemView.checkBoxService.isChecked
-            Log.w("id_card", id.toString())
+            if (remote.getPossibilityOfEditing(id) ||
+                viewHolder.itemView.checkBoxService.isChecked
+            )
+                viewHolder.itemView.checkBoxService.isChecked =
+                    !viewHolder.itemView.checkBoxService.isChecked
         }
     }
-
-
 }
