@@ -5,8 +5,8 @@
     <string name="app_name">CenterKrasoty</string>
     <string name="app_name_ru">Центр красоты</string>
     <string name="areYouSure">Вы уверены?</string>
-    <string name="areYouSureToDelete">Вы действительно отменить заказ</string>
-    <string name="areYouSureToLogout">Вы действительно хотите выйти?</string>
+    <string name="areYouSureToDelete">Вы действительно желаете отменить заказ</string>
+    <string name="areYouSureToLogout">Вы действительно желаете выйти?</string>
     <string name="buttonChooseOffice">Выбрать</string>
     <string name="buttonServicesContinue">Продолжить</string>
     <string name="cancel">Отмена</string>
@@ -23,7 +23,7 @@
     <string name="fragmentTimeTitle">Выберите время:</string>
     <string name="fragmentUserInfo">Мой аккаунт:</string>
     <string name="incorrectData">Вы ввели неправильные логин или пароль</string>
-    <string name="incorrectSMS">Вы ввели неправльный номер из SMS</string>
+    <string name="incorrectSMS">Вы ввели неправильный номер из SMS</string>
     <string name="loginAlreadyExists">Аккаунт с таким логином/псевдонимом уже существует</string>
     <string name="loginLabel">ВОЙТИ</string>
     <string name="loginTextView">Логин/псевдоним</string>
@@ -55,6 +55,9 @@
     <string name="pastOrders">Прошедшие заказы</string>
     <string name="orderPlace">Место:</string>
     <string name="orderDate">Дата:</string>
-
-    <string name="default_notification_channel_name">nitron_apps_channel_id</string>
+    <string name="allAttemptsWasBad">Превышено допустимое количество ошибок</string>
+    <string name="getNewSms">Отправить SMS ещё раз</string>
+    <string name="through">через</string>
+    <string name="back"><u>ОТМЕНА</u></string>
+    <string name="sec">сек.</string>
 </resources>

@@ -9,6 +9,5 @@ data class SMSRequest(
 
 data class SMSResponse(
     @SerializedName("login") val login: String,
-    @SerializedName("token") val token: String,
-    @SerializedName("result") val result: Boolean
+    @SerializedName("code") val code: Int
 )

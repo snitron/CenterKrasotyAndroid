@@ -12,7 +12,6 @@ data class Order(
     val date: String,
     val finishTime: String,
     val id: Int,
-    val login: String,
     val placeId: Int,
     val price: Double,
     @SerializedName("name") val serviceName: String,

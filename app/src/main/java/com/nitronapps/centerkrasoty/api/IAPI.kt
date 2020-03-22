@@ -68,27 +68,33 @@ interface IAPI {
     @POST("loginByPass/")
     @Headers("User-Agent: Center Krasoty Https Nitron Apps Burzhua Web Connector")
     fun loginByPassword(
-        @Field("login") login: String,
-        @Field("password") password: String,
-        @Field("phone") phone: String
+        @Field("phone") phone: String,
+        @Field("password") password: String
     ): Observable<AuthResponse>
 
     @FormUrlEncoded
     @POST("registerNewUser/")
     @Headers("User-Agent: Center Krasoty Https Nitron Apps Burzhua Web Connector")
     fun registerNewUser(
-        @Field("login") login: String,
+        @Field("phone") phone: String,
         @Field("password") password: String,
         @Field("name") name: String,
-        @Field("surname") surname: String,
-        @Field("phone") phone: String
+        @Field("surname") surname: String
     ): Observable<AuthResponse>
 
     @FormUrlEncoded
     @POST("smsRequest/")
     @Headers("User-Agent: Center Krasoty Https Nitron Apps Burzhua Web Connector")
     fun smsRequest(
-        @Field("login") login: String,
-        @Field("code") code: Int
+        @Field("phone") phone: String,
+        @Field("code") code: Int,
+        @Field("attempts") attempts: Int
+    ): Observable<SMSResponse>
+
+    @FormUrlEncoded
+    @POST("sendNewSms/")
+    @Headers("User-Agent: Center Krasoty Https Nitron Apps Burzhua Web Connector")
+    fun sendNewSms(
+        @Field("phone") phone: String
     ): Observable<SMSResponse>
 }

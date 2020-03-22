@@ -36,7 +36,12 @@ class NotificationBroadcastReceiver: BroadcastReceiver() {
             sb.append(' ')
             sb.append(serviceName)
 
-            builder.setContentText(sb.toString()).setSmallIcon(R.mipmap.ic_launcher)
+            builder
+                .setContentText(sb.toString())
+                .setSmallIcon(R.mipmap.ic_launcher)
+
+
+
             NotificationManagerCompat.from(context).notify(0, builder.build())
         }
     }

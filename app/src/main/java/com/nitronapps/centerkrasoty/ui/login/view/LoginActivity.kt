@@ -3,6 +3,7 @@ package com.nitronapps.centerkrasoty.ui.login.view
 import android.animation.Animator
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -16,10 +17,8 @@ import com.nitronapps.centerkrasoty.R
 import com.nitronapps.centerkrasoty.ui.login.presenter.LoginPresenter
 import com.nitronapps.centerkrasoty.ui.view.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.yield
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ticker
 import moxy.MvpAppCompatActivity
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
@@ -32,6 +31,7 @@ import ru.tinkoff.decoro.slots.PredefinedSlots
 import ru.tinkoff.decoro.slots.Slot
 import ru.tinkoff.decoro.watchers.FormatWatcher
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
+import kotlin.concurrent.timer
 
 interface LoginView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
@@ -42,12 +42,27 @@ interface LoginView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun startMainActivity()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun setProgressBarEnabled(by: Boolean)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun setButtonEnabled(by: Boolean)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun startTimeCoroutine()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun cancelTimeCoroutine()
 }
 
 class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
     private val presenter by moxyPresenter { LoginPresenter(this) }
     private val mask = MaskImpl(PredefinedSlots.RUS_PHONE_NUMBER, true)
     private val phoneWatcher = MaskFormatWatcher(mask)
+    private val slots = UnderscoreDigitSlotsParser().parseSlots("_____")
+    private val codeWatcher = MaskFormatWatcher(MaskImpl(slots, true))
+    private var currentJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +71,7 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
         setStatus(LoginStatus.LOGIN)
 
         buttonLogin.setOnClickListener {
-            if (!editTextLogin.text.equals("") && !editTextPassword.equals("")) {
+            if (!editTextPhone.text.equals("") && !editTextPassword.text.equals("")) {
                 it.visibility = View.GONE
 
                 when (presenter.getCondition()) {
@@ -64,7 +79,7 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
                     LoginStatus.LOGIN -> {
                         progressBarLogin.visibility = View.VISIBLE
                         presenter.loginClicked(
-                            editTextLogin.text.toString(),
+                            editTextPhone.text.toString(),
                             editTextPassword.text.toString()
                         )
                     }
@@ -73,11 +88,10 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
                         if (!editTextName.text.equals("") && !editTextSurname.text.equals("") && editTextPhone.text.length == 18) {
                             progressBarLogin.visibility = View.VISIBLE
                             presenter.registrationClicked(
-                                editTextLogin.text.toString(),
+                                editTextPhone.text.toString(),
                                 editTextPassword.text.toString(),
                                 editTextName.text.toString(),
-                                editTextSurname.text.toString(),
-                                editTextPhone.text.toString()
+                                editTextSurname.text.toString()
                             )
                         } else
                             sayError(getString(R.string.fillAllFields))
@@ -102,10 +116,16 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
         when (status) {
             LoginStatus.LOGIN -> {
                 textViewTypeLabel.visibility = View.GONE
-                editTextPhone.visibility = View.GONE
-                editTextPhone.visibility = View.GONE
+                textViewLoginBack.visibility = View.GONE
+
+                editTextPhone.visibility = View.VISIBLE
                 editTextName.visibility = View.GONE
                 editTextSurname.visibility = View.GONE
+
+                editTextPhone.text = Editable.Factory().newEditable("")
+                editTextName.text = Editable.Factory().newEditable("")
+                editTextSurname.text = Editable.Factory().newEditable("")
+                editTextPassword.text = Editable.Factory().newEditable("")
 
                 textViewRegistation.text = getString(R.string.registrationLabel)
                 textViewRegistation.setOnClickListener {
@@ -117,9 +137,23 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
 
             LoginStatus.REGISTRATION -> {
                 textViewTypeLabel.visibility = View.GONE
+                textViewLoginBack.visibility = View.GONE
+
                 editTextPhone.visibility = View.VISIBLE
                 editTextName.visibility = View.VISIBLE
                 editTextSurname.visibility = View.VISIBLE
+                editTextPassword.visibility = View.VISIBLE
+
+                editTextPhone.text = Editable.Factory().newEditable("")
+                editTextName.text = Editable.Factory().newEditable("")
+                editTextSurname.text = Editable.Factory().newEditable("")
+                editTextPassword.text = Editable.Factory().newEditable("")
+
+                editTextPhone.text = Editable.Factory.getInstance().newEditable("")
+                editTextPhone.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+
+                codeWatcher.removeFromTextView()
+                phoneWatcher.installOnAndFill(editTextPhone)
 
                 textViewRegistation.text = getString(R.string.loginLabel)
                 textViewRegistation.setOnClickListener {
@@ -133,20 +167,26 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
                 progressBarLogin.visibility = View.GONE
 
                 textViewTypeLabel.visibility = View.VISIBLE
-                textViewRegistation.visibility = View.GONE
+                textViewRegistation.visibility = View.VISIBLE
+                textViewRegistation.setOnClickListener(null)
+                textViewRegistation.setTextColor(Color.GRAY)
 
-                editTextLogin.visibility = View.GONE
-                editTextPassword.visibility = View.GONE
-                editTextName.visibility = View.GONE
+                textViewLoginBack.visibility = View.INVISIBLE
+                textViewLoginBack.setOnClickListener {
+                    presenter.cancelSmsPage()
+                }
+
+                startTimeCoroutine()
+
+                editTextPassword.visibility = View.INVISIBLE
+                editTextName.visibility = View.INVISIBLE
                 editTextSurname.visibility = View.GONE
 
                 editTextPhone.text = Editable.Factory.getInstance().newEditable("")
                 editTextPhone.textAlignment = View.TEXT_ALIGNMENT_CENTER
 
-                val slots = UnderscoreDigitSlotsParser().parseSlots("_____")
-                val watcher = MaskFormatWatcher(MaskImpl(slots, true))
                 phoneWatcher.removeFromTextView()
-                watcher.installOnAndFill(editTextPhone)
+                codeWatcher.installOnAndFill(editTextPhone)
             }
         }
 
@@ -158,6 +198,7 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
 
         progressBarLogin.visibility = View.GONE
         buttonLogin.visibility = View.VISIBLE
+        editTextPhone.text = Editable.Factory().newEditable("")
     }
 
     override fun startMainActivity() {
@@ -172,6 +213,57 @@ class LoginActivity : MvpAppCompatActivity(R.layout.activity_login), LoginView {
     }
 
     override fun onBackPressed() {}
+
+    override fun setProgressBarEnabled(by: Boolean) {
+        runOnUiThread {
+            progressBarLogin.visibility = if (by) View.VISIBLE else View.GONE
+        }
+    }
+
+    override fun setButtonEnabled(by: Boolean) {
+        runOnUiThread {
+            buttonLogin.isEnabled = by
+        }
+    }
+
+    override  fun startTimeCoroutine() {
+        textViewRegistation.setTextColor(Color.GRAY)
+        currentJob = CoroutineScope(Dispatchers.IO).launch {
+            for(i in 0..59){
+                printSeconds(i)
+                delay(1000)
+            }
+
+            launch(Dispatchers.Main) {
+                textViewRegistation.text = getString(R.string.getNewSms)
+                textViewRegistation.setTextColor(Color.BLACK)
+
+                textViewRegistation.setOnClickListener{
+                    presenter.requestNewSms()
+
+                    textViewRegistation.setOnClickListener(null)
+                }
+            }
+        }
+    }
+
+    private fun printSeconds(seconds: Int){
+        CoroutineScope(Dispatchers.Main).launch {
+            textViewRegistation.text = getString(R.string.getNewSms)
+                .plus(" (")
+                .plus(getString(R.string.through))
+                .plus(" ")
+                .plus(60 - seconds)
+                .plus(" ")
+                .plus(getString(R.string.sec))
+                .plus(")")
+        }
+    }
+
+    override fun cancelTimeCoroutine() {
+        if(currentJob != null)
+            currentJob!!.cancel()
+    }
 }
 
 enum class LoginStatus {

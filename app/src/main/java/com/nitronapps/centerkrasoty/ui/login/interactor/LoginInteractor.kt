@@ -6,6 +6,7 @@ import com.nitronapps.centerkrasoty.api.API
 import com.nitronapps.centerkrasoty.api.IAPI
 import com.nitronapps.centerkrasoty.data.UserDatabase
 import com.nitronapps.centerkrasoty.data.entity.UserInfo
+import com.nitronapps.centerkrasoty.model.UserLogin
 import com.nitronapps.centerkrasoty.ui.login.presenter.LoginPresenter
 import com.nitronapps.centerkrasoty.ui.login.view.LoginStatus
 import io.reactivex.Scheduler
@@ -16,9 +17,10 @@ import io.reactivex.schedulers.Schedulers
 import java.security.AlgorithmConstraints
 
 interface LoginInteractorInterface {
-    fun login(login: String, password: String)
-    fun register(login: String, password: String, name: String, surname: String, phone: String)
-    fun sms(code: Int)
+    fun login(phone: String, password: String)
+    fun register(phone: String, password: String, name: String, surname: String)
+    fun smsCheck(userLogin: UserLogin, code: Int, attempts: Int)
+    fun getNewSms(phone: String, first: Boolean)
     fun disposeRequests()
 }
 
@@ -26,7 +28,6 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
     private val userDatabase: UserDatabase
     private val api: IAPI
     private val compositeDisposable = CompositeDisposable()
-    private var loginInMemory = ""
 
     init {
         userDatabase = Room.databaseBuilder(
@@ -38,9 +39,9 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
         api = API.getRetrofitAPI()
     }
 
-    override fun login(login: String, password: String) {
+    override fun login(phone: String, password: String) {
         compositeDisposable.add(
-            api.loginByPassword(login, password, "")
+            api.loginByPassword(phone, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
@@ -61,22 +62,28 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
     }
 
     override fun register(
-        login: String,
+        phone: String,
         password: String,
         name: String,
-        surname: String,
-        phone: String
+        surname: String
     ) {
         compositeDisposable.add(
-            api.registerNewUser(login, password, name, surname, phone)
+            api.registerNewUser(phone, password, name, surname)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeBy(
                     onNext = {
                         if (it.code == 100) {
-                            loginInMemory = it.login
-
-                            presenter.startSMSPage()
+                            val user = UserInfo(0, it.token)
+                            compositeDisposable.add(
+                                userDatabase.userDao().insert(user)
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe({
+                                        presenter.startMain()
+                                    }, {
+                                        presenter.sayDBError()
+                                    })
+                            )
                         } else
                             presenter.sayError(LoginStatus.REGISTRATION, it.code)
                     },
@@ -88,29 +95,49 @@ class LoginInteractor(val presenter: LoginPresenter) : LoginInteractorInterface 
         )
     }
 
-    override fun sms(code: Int) {
-        //TODO: 3 attempts for input (with server)
+    override fun smsCheck(userLogin: UserLogin, code: Int, attempts: Int) {
         //TODO: Check valid data (for server too)
         compositeDisposable.add(
-            api.smsRequest(loginInMemory, code)
+            api.smsRequest(userLogin.phone, code, attempts)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                     {
-                        if (it.result) {
-                            val user = UserInfo(0, it.token)
-                            compositeDisposable.add(
-                                userDatabase.userDao().insert(user)
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribe()
+                        if (it.code == 200) {
+                            register(
+                                phone = userLogin.phone,
+                                password = userLogin.password,
+                                name = userLogin.name,
+                                surname = userLogin.surname
                             )
-                            presenter.startMain()
                         } else {
-                            presenter.sayError(LoginStatus.SMS_VERIFICATION, 204)
+                            presenter.sayError(LoginStatus.SMS_VERIFICATION, it.code)
                         }
                     },
                     {
                         presenter.sayError(LoginStatus.SMS_VERIFICATION, 0)
+                    }
+                )
+        )
+    }
+
+    override fun getNewSms(phone: String, first: Boolean) {
+        compositeDisposable.add(
+            api.sendNewSms(phone)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        if(it.code == 200) {
+                            if (first)
+                                presenter.startSMSPage()
+                            else
+                                presenter.newSmsGot()
+                        } else
+                            presenter.sayError(LoginStatus.SMS_VERIFICATION, it.code)
+                    },
+                    {
+                        presenter.sayError(LoginStatus.SMS_VERIFICATION, 500)
                     }
                 )
         )
